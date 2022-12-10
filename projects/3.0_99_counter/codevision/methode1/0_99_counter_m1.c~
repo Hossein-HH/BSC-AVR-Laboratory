@@ -19,20 +19,14 @@ void main() {
     PORTA = seg[0];
     PORTB = seg[0];
 
-    for (j = 1; j <= 10; j++)
-    {
-        for (i = 0; i <= 9; i++) {
-          PORTB = seg[i];
+    for (j = 0; j <= 9; j++) {
+      PORTA = seg[j];
 
-          delay_ms(150);
-        };
+      for (i = 0; i <= 9; i++) {
+        PORTB = seg[i];
 
-        PORTB = seg[0];
-        delay_ms(150);
-
-        if(j != 10){
-            PORTA = seg[j];
-        }
+        delay_ms(300);
+      };
     }
   };
 }

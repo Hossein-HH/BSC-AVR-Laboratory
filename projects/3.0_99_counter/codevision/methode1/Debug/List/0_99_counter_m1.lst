@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode1\Debug\List\0_99_counter_m1.asm Tue Dec 06 12:58:01 2022
+AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode1\Debug\List\0_99_counter_m1.asm Sat Dec 10 12:47:29 2022
 
                  
                  
@@ -1221,7 +1221,7 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
 00005a e0b0      	LDI  R27,HIGH(0)
 00005b e6e6      	LDI  R30,LOW(_0x3*2)
 00005c e0f0      	LDI  R31,HIGH(_0x3*2)
-00005d 940e 00aa 	CALL __INITLOCB
+00005d 940e 009f 	CALL __INITLOCB
                  ;	seg -> Y+0
                  ;	i -> R16,R17
                  ;	j -> R18,R19
@@ -1254,80 +1254,63 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
                  ; 0000 0014     PORTB = seg[0];
 00006d bbe8      	OUT  0x18,R30
                  ; 0000 0015 
-                 ; 0000 0016     for (j = 1; j <= 10; j++)
+                 ; 0000 0016     for (j = 0; j <= 9; j++) {
                 +
-00006e e021     +LDI R18 , LOW ( 1 )
-00006f e030     +LDI R19 , HIGH ( 1 )
-                 	__GETWRN 18,19,1
+00006e e020     +LDI R18 , LOW ( 0 )
+00006f e030     +LDI R19 , HIGH ( 0 )
+                 	__GETWRN 18,19,0
                  _0x8:
                 +
-000070 302b     +CPI R18 , LOW ( 11 )
-000071 e0e0     +LDI R30 , HIGH ( 11 )
+000070 302a     +CPI R18 , LOW ( 10 )
+000071 e0e0     +LDI R30 , HIGH ( 10 )
 000072 073e     +CPC R19 , R30
-                 	__CPWRN 18,19,11
-000073 f51c      	BRGE _0x9
-                 ; 0000 0017     {
-                 ; 0000 0018         for (i = 0; i <= 9; i++) {
+                 	__CPWRN 18,19,10
+000073 f4c4      	BRGE _0x9
+                 ; 0000 0017       PORTA = seg[j];
+000074 01f9      	MOVW R30,R18
+000075 940e 008e 	CALL SUBOPT_0x0
+000077 bbeb      	OUT  0x1B,R30
+                 ; 0000 0018 
+                 ; 0000 0019       for (i = 0; i <= 9; i++) {
                 +
-000074 e000     +LDI R16 , LOW ( 0 )
-000075 e010     +LDI R17 , HIGH ( 0 )
+000078 e000     +LDI R16 , LOW ( 0 )
+000079 e010     +LDI R17 , HIGH ( 0 )
                  	__GETWRN 16,17,0
                  _0xB:
                 +
-000076 300a     +CPI R16 , LOW ( 10 )
-000077 e0e0     +LDI R30 , HIGH ( 10 )
-000078 071e     +CPC R17 , R30
+00007a 300a     +CPI R16 , LOW ( 10 )
+00007b e0e0     +LDI R30 , HIGH ( 10 )
+00007c 071e     +CPC R17 , R30
                  	__CPWRN 16,17,10
-000079 f45c      	BRGE _0xC
-                 ; 0000 0019           PORTB = seg[i];
-00007a 01f8      	MOVW R30,R16
-00007b 940e 0099 	CALL SUBOPT_0x0
-00007d bbe8      	OUT  0x18,R30
-                 ; 0000 001A 
-                 ; 0000 001B           delay_ms(100);
-00007e e6a4      	LDI  R26,LOW(100)
-00007f e0b0      	LDI  R27,0
-000080 940e 00a0 	CALL _delay_ms
-                 ; 0000 001C         };
+00007d f45c      	BRGE _0xC
+                 ; 0000 001A         PORTB = seg[i];
+00007e 01f8      	MOVW R30,R16
+00007f 940e 008e 	CALL SUBOPT_0x0
+000081 bbe8      	OUT  0x18,R30
+                 ; 0000 001B 
+                 ; 0000 001C         delay_ms(300);
+000082 e2ac      	LDI  R26,LOW(300)
+000083 e0b1      	LDI  R27,HIGH(300)
+000084 940e 0095 	CALL _delay_ms
+                 ; 0000 001D       };
                 +
-000082 5f0f     +SUBI R16 , LOW ( - 1 )
-000083 4f1f     +SBCI R17 , HIGH ( - 1 )
+000086 5f0f     +SUBI R16 , LOW ( - 1 )
+000087 4f1f     +SBCI R17 , HIGH ( - 1 )
                  	__ADDWRN 16,17,1
-000084 cff1      	RJMP _0xB
+000088 cff1      	RJMP _0xB
                  _0xC:
-                 ; 0000 001D 
-                 ; 0000 001E         PORTB = seg[0];
-000085 81e8      	LD   R30,Y
-000086 bbe8      	OUT  0x18,R30
-                 ; 0000 001F         delay_ms(100);
-000087 e6a4      	LDI  R26,LOW(100)
-000088 e0b0      	LDI  R27,0
-000089 940e 00a0 	CALL _delay_ms
-                 ; 0000 0020 
-                 ; 0000 0021         if(j != 10){
-00008b e0ea      	LDI  R30,LOW(10)
-00008c e0f0      	LDI  R31,HIGH(10)
-00008d 17e2      	CP   R30,R18
-00008e 07f3      	CPC  R31,R19
-00008f f021      	BREQ _0xD
-                 ; 0000 0022             PORTA = seg[j];
-000090 01f9      	MOVW R30,R18
-000091 940e 0099 	CALL SUBOPT_0x0
-000093 bbeb      	OUT  0x1B,R30
-                 ; 0000 0023         }
-                 ; 0000 0024     }
-                 _0xD:
+                 ; 0000 001E     }
                 +
-000094 5f2f     +SUBI R18 , LOW ( - 1 )
-000095 4f3f     +SBCI R19 , HIGH ( - 1 )
+000089 5f2f     +SUBI R18 , LOW ( - 1 )
+00008a 4f3f     +SBCI R19 , HIGH ( - 1 )
                  	__ADDWRN 18,19,1
-000096 cfd9      	RJMP _0x8
+00008b cfe4      	RJMP _0x8
                  _0x9:
-                 ; 0000 0025   };
-000097 cfd3      	RJMP _0x4
-                 ; 0000 0026 }
-                 _0xE:
-000098 cfff      	RJMP _0xE
+                 ; 0000 001F   };
+00008c cfde      	RJMP _0x4
+                 ; 0000 0020 }
+                 _0xD:
+00008d cfff      	RJMP _0xD
                  ; .FEND
                  	#ifndef __SLEEP_DEFINED__
                  	#endif
@@ -1341,43 +1324,43 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
                  	.CSEG
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:2 WORDS
                  SUBOPT_0x0:
-000099 01de      	MOVW R26,R28
-00009a 0fee      	LSL  R30
-00009b 1fff      	ROL  R31
-00009c 0fae      	ADD  R26,R30
-00009d 1fbf      	ADC  R27,R31
-00009e 91ec      	LD   R30,X
-00009f 9508      	RET
+00008e 01de      	MOVW R26,R28
+00008f 0fee      	LSL  R30
+000090 1fff      	ROL  R31
+000091 0fae      	ADD  R26,R30
+000092 1fbf      	ADC  R27,R31
+000093 91ec      	LD   R30,X
+000094 9508      	RET
                  
                  
                  	.CSEG
                  _delay_ms:
-0000a0 9610      	adiw r26,0
-0000a1 f039      	breq __delay_ms1
+000095 9610      	adiw r26,0
+000096 f039      	breq __delay_ms1
                  __delay_ms0:
                 +
-0000a2 ef8a     +LDI R24 , LOW ( 0xFA )
-0000a3 e090     +LDI R25 , HIGH ( 0xFA )
+000097 ef8a     +LDI R24 , LOW ( 0xFA )
+000098 e090     +LDI R25 , HIGH ( 0xFA )
                 +__DELAY_USW_LOOP :
-0000a4 9701     +SBIW R24 , 1
-0000a5 f7f1     +BRNE __DELAY_USW_LOOP
+000099 9701     +SBIW R24 , 1
+00009a f7f1     +BRNE __DELAY_USW_LOOP
                  	__DELAY_USW 0xFA
-0000a6 95a8      	wdr
-0000a7 9711      	sbiw r26,1
-0000a8 f7c9      	brne __delay_ms0
+00009b 95a8      	wdr
+00009c 9711      	sbiw r26,1
+00009d f7c9      	brne __delay_ms0
                  __delay_ms1:
-0000a9 9508      	ret
+00009e 9508      	ret
                  
                  __INITLOCB:
                  __INITLOCW:
-0000aa 0fac      	ADD  R26,R28
-0000ab 1fbd      	ADC  R27,R29
+00009f 0fac      	ADD  R26,R28
+0000a0 1fbd      	ADC  R27,R29
                  __INITLOC0:
-0000ac 9005      	LPM  R0,Z+
-0000ad 920d      	ST   X+,R0
-0000ae 958a      	DEC  R24
-0000af f7e1      	BRNE __INITLOC0
-0000b0 9508      	RET
+0000a1 9005      	LPM  R0,Z+
+0000a2 920d      	ST   X+,R0
+0000a3 958a      	DEC  R24
+0000a4 f7e1      	BRNE __INITLOC0
+0000a5 9508      	RET
                  
                  ;END OF CODE MARKER
                  __END_OF_CODE:
@@ -1400,38 +1383,38 @@ counted separately from r26..r31 here.
 ATmega32A register use summary:
 r0 :   2 r1 :   0 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
-r16:   5 r17:   4 r18:   6 r19:   5 r20:   0 r21:   0 r22:   0 r23:   0 
-r24:   8 r25:   2 r26:  10 r27:   6 r28:   4 r29:   2 r30:  36 r31:   7 
-x  :   4 y  :   2 z  :   1 
+r16:   5 r17:   4 r18:   5 r19:   4 r20:   0 r21:   0 r22:   0 r23:   0 
+r24:   8 r25:   2 r26:   9 r27:   5 r28:   4 r29:   2 r30:  32 r31:   5 
+x  :   4 y  :   1 z  :   1 
 Registers used: 16 out of 35 (45.7%)
 
 ATmega32A instruction use summary:
 .lds  :   0 .lds.l:   0 .sts  :   0 .sts.l:   0 adc   :   2 add   :   2 
 adiw  :   1 and   :   0 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 
-brbc  :   0 brbs  :   0 brcc  :   0 brcs  :   0 break :   0 breq  :   2 
+brbc  :   0 brbs  :   0 brcc  :   0 brcs  :   0 break :   0 breq  :   1 
 brge  :   2 brhc  :   0 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 
 brlt  :   0 brmi  :   0 brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 
-brts  :   0 brvc  :   0 brvs  :   0 bset  :   0 bst   :   0 call  :   5 
+brts  :   0 brvc  :   0 brvs  :   0 bset  :   0 bst   :   0 call  :   4 
 cbi   :   0 cbr   :   0 clc   :   0 clh   :   0 cli   :   1 cln   :   0 
 clr   :   2 cls   :   0 clt   :   0 clv   :   0 clz   :   0 com   :   0 
-cp    :   1 cpc   :   3 cpi   :   2 cpse  :   0 dec   :   2 des   :   0 
+cp    :   0 cpc   :   2 cpi   :   2 cpse  :   0 dec   :   2 des   :   0 
 eor   :   0 fmul  :   0 fmuls :   0 fmulsu:   0 icall :   0 ijmp  :   0 
-in    :   0 inc   :   0 jmp   :  22 ld    :   3 ldd   :   0 ldi   :  37 
+in    :   0 inc   :   0 jmp   :  22 ld    :   2 ldd   :   0 ldi   :  33 
 lds   :   0 lpm   :   1 lsl   :   1 lsr   :   0 mov   :   0 movw  :   3 
 mul   :   0 muls  :   0 mulsu :   0 neg   :   0 nop   :   0 or    :   0 
-ori   :   0 out   :  14 pop   :   0 push  :   0 rcall :   0 ret   :   3 
+ori   :   0 out   :  13 pop   :   0 push  :   0 rcall :   0 ret   :   3 
 reti  :   0 rjmp  :   4 rol   :   1 ror   :   0 sbc   :   0 sbci  :   2 
 sbi   :   0 sbic  :   0 sbis  :   0 sbiw  :   4 sbr   :   0 sbrc  :   0 
 sbrs  :   0 sec   :   0 seh   :   0 sei   :   0 sen   :   0 ser   :   0 
 ses   :   0 set   :   0 sev   :   0 sez   :   0 sleep :   0 spm   :   0 
 st    :   3 std   :   0 sts   :   0 sub   :   0 subi  :   2 swap  :   0 
 tst   :   0 wdr   :   1 
-Instructions used: 28 out of 116 (24.1%)
+Instructions used: 27 out of 116 (23.3%)
 
 ATmega32A memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000162    316     38    354   32768   1.1%
+[.cseg] 0x000000 0x00014c    294     38    332   32768   1.0%
 [.dseg] 0x000060 0x000260      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

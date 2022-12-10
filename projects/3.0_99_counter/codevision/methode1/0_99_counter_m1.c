@@ -17,22 +17,16 @@ void main() {
 
   while (1) {
     PORTA = seg[0];
-
     PORTB = seg[0];
 
-    for (j = 1; j <= 10; j++) {
+    for (j = 0; j <= 9; j++) {
+      PORTA = seg[j];
+
       for (i = 0; i <= 9; i++) {
         PORTB = seg[i];
 
         delay_ms(100);
       };
-
-      PORTB = seg[0];
-      delay_ms(100);
-
-      if (j != 10) {
-        PORTA = seg[j] ک
-      }
     }
   };
 }

@@ -20,10 +20,10 @@ void main() {
 
     for (i = 0; i <= 99; i++) {
       PORTA = seg[i / 10];
-      delay_ms(100);
+      delay_ms(50);
 
       PORTB = seg[i % 10];
-      delay_ms(100);
+      delay_ms(50);
     }
   };
 }

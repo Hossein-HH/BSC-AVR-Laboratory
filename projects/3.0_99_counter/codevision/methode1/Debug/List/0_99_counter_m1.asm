@@ -1231,60 +1231,43 @@ _0x4:
 ; 0000 0014     PORTB = seg[0];
 	OUT  0x18,R30
 ; 0000 0015 
-; 0000 0016     for (j = 1; j <= 10; j++)
-	__GETWRN 18,19,1
+; 0000 0016     for (j = 0; j <= 9; j++) {
+	__GETWRN 18,19,0
 _0x8:
-	__CPWRN 18,19,11
+	__CPWRN 18,19,10
 	BRGE _0x9
-; 0000 0017     {
-; 0000 0018         for (i = 0; i <= 9; i++) {
+; 0000 0017       PORTA = seg[j];
+	MOVW R30,R18
+	CALL SUBOPT_0x0
+	OUT  0x1B,R30
+; 0000 0018 
+; 0000 0019       for (i = 0; i <= 9; i++) {
 	__GETWRN 16,17,0
 _0xB:
 	__CPWRN 16,17,10
 	BRGE _0xC
-; 0000 0019           PORTB = seg[i];
+; 0000 001A         PORTB = seg[i];
 	MOVW R30,R16
 	CALL SUBOPT_0x0
 	OUT  0x18,R30
-; 0000 001A 
-; 0000 001B           delay_ms(100);
-	LDI  R26,LOW(100)
-	LDI  R27,0
+; 0000 001B 
+; 0000 001C         delay_ms(300);
+	LDI  R26,LOW(300)
+	LDI  R27,HIGH(300)
 	CALL _delay_ms
-; 0000 001C         };
+; 0000 001D       };
 	__ADDWRN 16,17,1
 	RJMP _0xB
 _0xC:
-; 0000 001D 
-; 0000 001E         PORTB = seg[0];
-	LD   R30,Y
-	OUT  0x18,R30
-; 0000 001F         delay_ms(100);
-	LDI  R26,LOW(100)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 0020 
-; 0000 0021         if(j != 10){
-	LDI  R30,LOW(10)
-	LDI  R31,HIGH(10)
-	CP   R30,R18
-	CPC  R31,R19
-	BREQ _0xD
-; 0000 0022             PORTA = seg[j];
-	MOVW R30,R18
-	CALL SUBOPT_0x0
-	OUT  0x1B,R30
-; 0000 0023         }
-; 0000 0024     }
-_0xD:
+; 0000 001E     }
 	__ADDWRN 18,19,1
 	RJMP _0x8
 _0x9:
-; 0000 0025   };
+; 0000 001F   };
 	RJMP _0x4
-; 0000 0026 }
-_0xE:
-	RJMP _0xE
+; 0000 0020 }
+_0xD:
+	RJMP _0xD
 ; .FEND
 	#ifndef __SLEEP_DEFINED__
 	#define __SLEEP_DEFINED__

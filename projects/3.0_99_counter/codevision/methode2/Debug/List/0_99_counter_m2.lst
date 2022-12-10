@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode2\Debug\List\0_99_counter_m2.asm Tue Dec 06 12:57:09 2022
+AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode2\Debug\List\0_99_counter_m2.asm Sat Dec 10 12:50:06 2022
 
                  
                  
@@ -1248,7 +1248,7 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
                  ; 0000 0013     PORTB = seg[0];
 00006b bbe8      	OUT  0x18,R30
                  ; 0000 0014 
-                 ; 0000 0015     for (i = 0; i <= 99; i++)
+                 ; 0000 0015     for (i = 0; i <= 99; i++) {
                 +
 00006c e000     +LDI R16 , LOW ( 0 )
 00006d e010     +LDI R17 , HIGH ( 0 )
@@ -1260,40 +1260,39 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
 000070 071e     +CPC R17 , R30
                  	__CPWRN 16,17,100
 000071 f4dc      	BRGE _0x9
-                 ; 0000 0016     {
-                 ; 0000 0017         PORTA = seg[i/10];
+                 ; 0000 0016       PORTA = seg[i / 10];
 000072 01d8      	MOVW R26,R16
 000073 e0ea      	LDI  R30,LOW(10)
 000074 e0f0      	LDI  R31,HIGH(10)
 000075 940e 00b7 	CALL __DIVW21
 000077 940e 008f 	CALL SUBOPT_0x0
 000079 bbeb      	OUT  0x1B,R30
-                 ; 0000 0018         delay_ms(100);
-00007a e6a4      	LDI  R26,LOW(100)
+                 ; 0000 0017       delay_ms(50);
+00007a e3a2      	LDI  R26,LOW(50)
 00007b e0b0      	LDI  R27,0
 00007c 940e 0096 	CALL _delay_ms
-                 ; 0000 0019 
-                 ; 0000 001A         PORTB = seg[i%10];
+                 ; 0000 0018 
+                 ; 0000 0019       PORTB = seg[i % 10];
 00007e 01d8      	MOVW R26,R16
 00007f e0ea      	LDI  R30,LOW(10)
 000080 e0f0      	LDI  R31,HIGH(10)
 000081 940e 00bc 	CALL __MODW21
 000083 940e 008f 	CALL SUBOPT_0x0
 000085 bbe8      	OUT  0x18,R30
-                 ; 0000 001B         delay_ms(100);
-000086 e6a4      	LDI  R26,LOW(100)
+                 ; 0000 001A       delay_ms(50);
+000086 e3a2      	LDI  R26,LOW(50)
 000087 e0b0      	LDI  R27,0
 000088 940e 0096 	CALL _delay_ms
-                 ; 0000 001C     }
+                 ; 0000 001B     }
                 +
 00008a 5f0f     +SUBI R16 , LOW ( - 1 )
 00008b 4f1f     +SBCI R17 , HIGH ( - 1 )
                  	__ADDWRN 16,17,1
 00008c cfe1      	RJMP _0x8
                  _0x9:
-                 ; 0000 001D   };
+                 ; 0000 001C   };
 00008d cfdb      	RJMP _0x4
-                 ; 0000 001E }
+                 ; 0000 001D }
                  _0xA:
 00008e cfff      	RJMP _0xA
                  ; .FEND

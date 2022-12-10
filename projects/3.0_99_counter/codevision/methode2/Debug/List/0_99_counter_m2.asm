@@ -1228,42 +1228,41 @@ _0x4:
 ; 0000 0013     PORTB = seg[0];
 	OUT  0x18,R30
 ; 0000 0014 
-; 0000 0015     for (i = 0; i <= 99; i++)
+; 0000 0015     for (i = 0; i <= 99; i++) {
 	__GETWRN 16,17,0
 _0x8:
 	__CPWRN 16,17,100
 	BRGE _0x9
-; 0000 0016     {
-; 0000 0017         PORTA = seg[i/10];
+; 0000 0016       PORTA = seg[i / 10];
 	MOVW R26,R16
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	CALL __DIVW21
 	CALL SUBOPT_0x0
 	OUT  0x1B,R30
-; 0000 0018         delay_ms(100);
-	LDI  R26,LOW(100)
+; 0000 0017       delay_ms(50);
+	LDI  R26,LOW(50)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 0019 
-; 0000 001A         PORTB = seg[i%10];
+; 0000 0018 
+; 0000 0019       PORTB = seg[i % 10];
 	MOVW R26,R16
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	CALL __MODW21
 	CALL SUBOPT_0x0
 	OUT  0x18,R30
-; 0000 001B         delay_ms(100);
-	LDI  R26,LOW(100)
+; 0000 001A       delay_ms(50);
+	LDI  R26,LOW(50)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 001C     }
+; 0000 001B     }
 	__ADDWRN 16,17,1
 	RJMP _0x8
 _0x9:
-; 0000 001D   };
+; 0000 001C   };
 	RJMP _0x4
-; 0000 001E }
+; 0000 001D }
 _0xA:
 	RJMP _0xA
 ; .FEND
