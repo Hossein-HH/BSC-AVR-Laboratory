@@ -8,6 +8,7 @@ void main() {
 
   int i = 0;
   int j = 0;
+  int x = 0;
 
   DDRA = 0xFF;
   PORTA = 0x00;
@@ -25,25 +26,22 @@ void main() {
 
     PORTB = 1;
 
-    for (j = 0; j < 10; j++)
-    {
-        for (i = 0; i < 10; i++) {
-            PORTB = 2;
-            PORTA = seg[j];
-            delay_ms(50);
-
-            PORTB = 1;
-            PORTA = seg[i];
-            delay_ms(50);
-        };
-
+    for (j = 0; j < 10; j++) {
+      for (i = 0; i < 10; i++) {
+        for (x = 0; x < 99; x++) {
         PORTB = 2;
         PORTA = seg[j];
+        delay_ms(5);
 
         PORTB = 1;
-//        if(j != 10){
-//            PORTA = seg[j];
-//        }
+        PORTA = seg[i];
+        }
+      };
+
+      PORTB = 2;
+      PORTA = seg[j];
+
+      PORTB = 1;
     }
   };
 }

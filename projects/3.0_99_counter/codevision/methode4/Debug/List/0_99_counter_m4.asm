@@ -1119,9 +1119,9 @@ _tbl16_G100:
 	.DB  0x0,0x10,0x0,0x1,0x10,0x0,0x1,0x0
 
 _0x3:
-	.DB  0x3F,0x0,0x6,0x0,0x5B,0x0,0x4F,0x0
-	.DB  0x66,0x0,0x6D,0x0,0x7D,0x0,0x7,0x0
-	.DB  0x7F,0x0,0x6F,0x0
+	.DB  0x0,0x0,0x3F,0x0,0x6,0x0,0x5B,0x0
+	.DB  0x4F,0x0,0x66,0x0,0x6D,0x0,0x7D,0x0
+	.DB  0x7,0x0,0x7F,0x0,0x6F,0x0
 __RESET:
 	CLI
 	CLR  R30
@@ -1195,94 +1195,125 @@ _main:
 ; 0000 0007   int seg[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f};
 ; 0000 0008 
 ; 0000 0009   int i = 0;
-; 0000 000A 
-; 0000 000B   DDRA = 0xFF;
-	SBIW R28,20
-	LDI  R24,20
+; 0000 000A   int temp1 = 0;
+; 0000 000B   int temp2 = 0;
+; 0000 000C   int x = 0;
+; 0000 000D 
+; 0000 000E   DDRA = 0xFF;
+	SBIW R28,22
+	LDI  R24,22
 	LDI  R26,LOW(0)
 	LDI  R27,HIGH(0)
 	LDI  R30,LOW(_0x3*2)
 	LDI  R31,HIGH(_0x3*2)
 	CALL __INITLOCB
-;	seg -> Y+0
+;	seg -> Y+2
 ;	i -> R16,R17
+;	temp1 -> R18,R19
+;	temp2 -> R20,R21
+;	x -> Y+0
 	__GETWRN 16,17,0
+	__GETWRN 18,19,0
+	__GETWRN 20,21,0
 	LDI  R30,LOW(255)
 	OUT  0x1A,R30
-; 0000 000C   PORTA = 0x00;
+; 0000 000F   PORTA = 0x00;
 	LDI  R30,LOW(0)
 	OUT  0x1B,R30
-; 0000 000D 
-; 0000 000E   DDRB = 0xFF;
+; 0000 0010 
+; 0000 0011   DDRB = 0xFF;
 	LDI  R30,LOW(255)
 	OUT  0x17,R30
-; 0000 000F   PORTB = 0x00;
+; 0000 0012   PORTB = 0x00;
 	LDI  R30,LOW(0)
 	OUT  0x18,R30
-; 0000 0010 
-; 0000 0011   while (1) {
+; 0000 0013 
+; 0000 0014   while (1) {
 _0x4:
-; 0000 0012     PORTB = 1;
-	LDI  R30,LOW(1)
-	OUT  0x18,R30
-; 0000 0013     PORTA = seg[0];
-	LD   R30,Y
-	OUT  0x1B,R30
-; 0000 0014     delay_ms(10);
-	LDI  R26,LOW(10)
-	LDI  R27,0
-	CALL _delay_ms
 ; 0000 0015     PORTB = 2;
 	LDI  R30,LOW(2)
 	OUT  0x18,R30
 ; 0000 0016     PORTA = seg[0];
-	LD   R30,Y
+	LDD  R30,Y+2
 	OUT  0x1B,R30
-; 0000 0017     delay_ms(100);
+; 0000 0017     delay_ms(10);
+	LDI  R26,LOW(10)
+	LDI  R27,0
+	CALL _delay_ms
+; 0000 0018     PORTB = 1;
+	LDI  R30,LOW(1)
+	OUT  0x18,R30
+; 0000 0019     PORTA = seg[0];
+	LDD  R30,Y+2
+	OUT  0x1B,R30
+; 0000 001A     delay_ms(100);
 	LDI  R26,LOW(100)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 0018 
-; 0000 0019     PORTB = 1;
-	LDI  R30,LOW(1)
+; 0000 001B 
+; 0000 001C     PORTB = 2;
+	LDI  R30,LOW(2)
 	OUT  0x18,R30
-; 0000 001A 
-; 0000 001B     for (i = 0; i < 100; i++)
+; 0000 001D 
+; 0000 001E     for (i = 0; i < 100; i++) {
 	__GETWRN 16,17,0
 _0x8:
 	__CPWRN 16,17,100
 	BRGE _0x9
-; 0000 001C     {
-; 0000 001D         PORTB = 2;
-	LDI  R30,LOW(2)
-	OUT  0x18,R30
-; 0000 001E         PORTA = seg[i/10];
+; 0000 001F       temp2 = i / 10;
 	MOVW R26,R16
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	CALL __DIVW21
-	CALL SUBOPT_0x0
-; 0000 001F         delay_ms(50);
-; 0000 0020 
-; 0000 0021         PORTB = 1;
-	LDI  R30,LOW(1)
-	OUT  0x18,R30
-; 0000 0022         PORTA = seg[i%10];
+	MOVW R20,R30
+; 0000 0020       temp1 = i % 10;
 	MOVW R26,R16
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	CALL __MODW21
+	MOVW R18,R30
+; 0000 0021 
+; 0000 0022       for (x = 0; x < 50; x++) {
+	LDI  R30,LOW(0)
+	STD  Y+0,R30
+	STD  Y+0+1,R30
+_0xB:
+	LD   R26,Y
+	LDD  R27,Y+1
+	SBIW R26,50
+	BRGE _0xC
+; 0000 0023         PORTB = 1;
+	LDI  R30,LOW(1)
+	OUT  0x18,R30
+; 0000 0024         PORTA = seg[temp2];
+	MOVW R30,R20
 	CALL SUBOPT_0x0
-; 0000 0023         delay_ms(50);
-; 0000 0024     };
+; 0000 0025         delay_ms(5);
+; 0000 0026 
+; 0000 0027         PORTB = 2;
+	LDI  R30,LOW(2)
+	OUT  0x18,R30
+; 0000 0028         PORTA = seg[temp1];
+	MOVW R30,R18
+	CALL SUBOPT_0x0
+; 0000 0029         delay_ms(5);
+; 0000 002A       }
+	LD   R30,Y
+	LDD  R31,Y+1
+	ADIW R30,1
+	ST   Y,R30
+	STD  Y+1,R31
+	RJMP _0xB
+_0xC:
+; 0000 002B     };
 	__ADDWRN 16,17,1
 	RJMP _0x8
 _0x9:
-; 0000 0025   }
+; 0000 002C   }
 	RJMP _0x4
-; 0000 0026 }
-_0xA:
-	RJMP _0xA
+; 0000 002D }
+_0xD:
+	RJMP _0xD
 ; .FEND
 	#ifndef __SLEEP_DEFINED__
 	#define __SLEEP_DEFINED__
@@ -1306,13 +1337,14 @@ _0xA:
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:7 WORDS
 SUBOPT_0x0:
 	MOVW R26,R28
+	ADIW R26,2
 	LSL  R30
 	ROL  R31
 	ADD  R26,R30
 	ADC  R27,R31
 	LD   R30,X
 	OUT  0x1B,R30
-	LDI  R26,LOW(50)
+	LDI  R26,LOW(5)
 	LDI  R27,0
 	JMP  _delay_ms
 

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode3\Debug\List\0_99_counter_m3.asm Wed Dec 07 22:28:34 2022
+AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode3\Debug\List\0_99_counter_m3.asm Mon Dec 12 09:36:10 2022
 
                  
                  
@@ -1213,18 +1213,20 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
                  ; 0000 0008 
                  ; 0000 0009   int i = 0;
                  ; 0000 000A   int j = 0;
-                 ; 0000 000B 
-                 ; 0000 000C   DDRA = 0xFF;
+                 ; 0000 000B   int x = 0;
+                 ; 0000 000C 
+                 ; 0000 000D   DDRA = 0xFF;
 000057 9764      	SBIW R28,20
 000058 e184      	LDI  R24,20
 000059 e0a0      	LDI  R26,LOW(0)
 00005a e0b0      	LDI  R27,HIGH(0)
 00005b e6e6      	LDI  R30,LOW(_0x3*2)
 00005c e0f0      	LDI  R31,HIGH(_0x3*2)
-00005d 940e 00be 	CALL __INITLOCB
+00005d 940e 00bc 	CALL __INITLOCB
                  ;	seg -> Y+0
                  ;	i -> R16,R17
                  ;	j -> R18,R19
+                 ;	x -> R20,R21
                 +
 00005f e000     +LDI R16 , LOW ( 0 )
 000060 e010     +LDI R17 , HIGH ( 0 )
@@ -1233,122 +1235,123 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
 000061 e020     +LDI R18 , LOW ( 0 )
 000062 e030     +LDI R19 , HIGH ( 0 )
                  	__GETWRN 18,19,0
-000063 efef      	LDI  R30,LOW(255)
-000064 bbea      	OUT  0x1A,R30
-                 ; 0000 000D   PORTA = 0x00;
-000065 e0e0      	LDI  R30,LOW(0)
-000066 bbeb      	OUT  0x1B,R30
-                 ; 0000 000E 
-                 ; 0000 000F   DDRB = 0xFF;
-000067 efef      	LDI  R30,LOW(255)
-000068 bbe7      	OUT  0x17,R30
-                 ; 0000 0010   PORTB = 0x00;
-000069 e0e0      	LDI  R30,LOW(0)
-00006a bbe8      	OUT  0x18,R30
-                 ; 0000 0011 
-                 ; 0000 0012   while (1) {
-                 _0x4:
-                 ; 0000 0013     PORTB = 1;
-00006b e0e1      	LDI  R30,LOW(1)
-00006c bbe8      	OUT  0x18,R30
-                 ; 0000 0014     PORTA = seg[0];
-00006d 81e8      	LD   R30,Y
-00006e bbeb      	OUT  0x1B,R30
-                 ; 0000 0015     delay_ms(10);
-00006f e0aa      	LDI  R26,LOW(10)
-000070 e0b0      	LDI  R27,0
-000071 940e 00b4 	CALL _delay_ms
-                 ; 0000 0016     PORTB = 2;
-000073 e0e2      	LDI  R30,LOW(2)
-000074 bbe8      	OUT  0x18,R30
-                 ; 0000 0017     PORTA = seg[0];
-000075 81e8      	LD   R30,Y
-000076 bbeb      	OUT  0x1B,R30
-                 ; 0000 0018     delay_ms(100);
-000077 e6a4      	LDI  R26,LOW(100)
-000078 e0b0      	LDI  R27,0
-000079 940e 00b4 	CALL _delay_ms
-                 ; 0000 0019 
-                 ; 0000 001A     PORTB = 1;
-00007b e0e1      	LDI  R30,LOW(1)
-00007c bbe8      	OUT  0x18,R30
-                 ; 0000 001B 
-                 ; 0000 001C     for (j = 0; j < 10; j++)
                 +
-00007d e020     +LDI R18 , LOW ( 0 )
-00007e e030     +LDI R19 , HIGH ( 0 )
+000063 e040     +LDI R20 , LOW ( 0 )
+000064 e050     +LDI R21 , HIGH ( 0 )
+                 	__GETWRN 20,21,0
+000065 efef      	LDI  R30,LOW(255)
+000066 bbea      	OUT  0x1A,R30
+                 ; 0000 000E   PORTA = 0x00;
+000067 e0e0      	LDI  R30,LOW(0)
+000068 bbeb      	OUT  0x1B,R30
+                 ; 0000 000F 
+                 ; 0000 0010   DDRB = 0xFF;
+000069 efef      	LDI  R30,LOW(255)
+00006a bbe7      	OUT  0x17,R30
+                 ; 0000 0011   PORTB = 0x00;
+00006b e0e0      	LDI  R30,LOW(0)
+00006c bbe8      	OUT  0x18,R30
+                 ; 0000 0012 
+                 ; 0000 0013   while (1) {
+                 _0x4:
+                 ; 0000 0014     PORTB = 1;
+00006d e0e1      	LDI  R30,LOW(1)
+00006e bbe8      	OUT  0x18,R30
+                 ; 0000 0015     PORTA = seg[0];
+00006f 81e8      	LD   R30,Y
+000070 bbeb      	OUT  0x1B,R30
+                 ; 0000 0016     delay_ms(10);
+000071 e0aa      	LDI  R26,LOW(10)
+000072 e0b0      	LDI  R27,0
+000073 940e 00b2 	CALL _delay_ms
+                 ; 0000 0017     PORTB = 2;
+000075 e0e2      	LDI  R30,LOW(2)
+000076 bbe8      	OUT  0x18,R30
+                 ; 0000 0018     PORTA = seg[0];
+000077 81e8      	LD   R30,Y
+000078 bbeb      	OUT  0x1B,R30
+                 ; 0000 0019     delay_ms(100);
+000079 e6a4      	LDI  R26,LOW(100)
+00007a e0b0      	LDI  R27,0
+00007b 940e 00b2 	CALL _delay_ms
+                 ; 0000 001A 
+                 ; 0000 001B     PORTB = 1;
+00007d e0e1      	LDI  R30,LOW(1)
+00007e bbe8      	OUT  0x18,R30
+                 ; 0000 001C 
+                 ; 0000 001D     for (j = 0; j < 10; j++) {
+                +
+00007f e020     +LDI R18 , LOW ( 0 )
+000080 e030     +LDI R19 , HIGH ( 0 )
                  	__GETWRN 18,19,0
                  _0x8:
                 +
-00007f 302a     +CPI R18 , LOW ( 10 )
-000080 e0e0     +LDI R30 , HIGH ( 10 )
-000081 073e     +CPC R19 , R30
+000081 302a     +CPI R18 , LOW ( 10 )
+000082 e0e0     +LDI R30 , HIGH ( 10 )
+000083 073e     +CPC R19 , R30
                  	__CPWRN 18,19,10
-000082 f524      	BRGE _0x9
-                 ; 0000 001D     {
-                 ; 0000 001E         for (i = 0; i < 10; i++) {
+000084 f504      	BRGE _0x9
+                 ; 0000 001E       for (i = 0; i < 10; i++) {
                 +
-000083 e000     +LDI R16 , LOW ( 0 )
-000084 e010     +LDI R17 , HIGH ( 0 )
+000085 e000     +LDI R16 , LOW ( 0 )
+000086 e010     +LDI R17 , HIGH ( 0 )
                  	__GETWRN 16,17,0
                  _0xB:
                 +
-000085 300a     +CPI R16 , LOW ( 10 )
-000086 e0e0     +LDI R30 , HIGH ( 10 )
-000087 071e     +CPC R17 , R30
+000087 300a     +CPI R16 , LOW ( 10 )
+000088 e0e0     +LDI R30 , HIGH ( 10 )
+000089 071e     +CPC R17 , R30
                  	__CPWRN 16,17,10
-000088 f4bc      	BRGE _0xC
-                 ; 0000 001F             PORTB = 2;
-000089 940e 00a9 	CALL SUBOPT_0x0
-                 ; 0000 0020             PORTA = seg[j];
-                 ; 0000 0021             delay_ms(50);
-00008b e3a2      	LDI  R26,LOW(50)
-00008c e0b0      	LDI  R27,0
-00008d 940e 00b4 	CALL _delay_ms
-                 ; 0000 0022 
-                 ; 0000 0023             PORTB = 1;
-00008f e0e1      	LDI  R30,LOW(1)
-000090 bbe8      	OUT  0x18,R30
-                 ; 0000 0024             PORTA = seg[i];
-000091 01f8      	MOVW R30,R16
-000092 01de      	MOVW R26,R28
-000093 0fee      	LSL  R30
-000094 1fff      	ROL  R31
-000095 0fae      	ADD  R26,R30
-000096 1fbf      	ADC  R27,R31
-000097 91ec      	LD   R30,X
-000098 bbeb      	OUT  0x1B,R30
-                 ; 0000 0025             delay_ms(50);
-000099 e3a2      	LDI  R26,LOW(50)
-00009a e0b0      	LDI  R27,0
-00009b 940e 00b4 	CALL _delay_ms
-                 ; 0000 0026         };
+00008a f49c      	BRGE _0xC
+                 ; 0000 001F      //   for (x = 0; x < 99; x++) {
+                 ; 0000 0020         PORTB = 2;
+00008b 940e 00a7 	CALL SUBOPT_0x0
+                 ; 0000 0021         PORTA = seg[j];
+                 ; 0000 0022         delay_ms(5);
+00008d e0a5      	LDI  R26,LOW(5)
+00008e e0b0      	LDI  R27,0
+00008f 940e 00b2 	CALL _delay_ms
+                 ; 0000 0023 
+                 ; 0000 0024         PORTB = 1;
+000091 e0e1      	LDI  R30,LOW(1)
+000092 bbe8      	OUT  0x18,R30
+                 ; 0000 0025         PORTA = seg[i];
+000093 01f8      	MOVW R30,R16
+000094 01de      	MOVW R26,R28
+000095 0fee      	LSL  R30
+000096 1fff      	ROL  R31
+000097 0fae      	ADD  R26,R30
+000098 1fbf      	ADC  R27,R31
+000099 91ec      	LD   R30,X
+00009a bbeb      	OUT  0x1B,R30
+                 ; 0000 0026        // }
+                 ; 0000 0027       };
                 +
-00009d 5f0f     +SUBI R16 , LOW ( - 1 )
-00009e 4f1f     +SBCI R17 , HIGH ( - 1 )
+00009b 5f0f     +SUBI R16 , LOW ( - 1 )
+00009c 4f1f     +SBCI R17 , HIGH ( - 1 )
                  	__ADDWRN 16,17,1
-00009f cfe5      	RJMP _0xB
+00009d cfe9      	RJMP _0xB
                  _0xC:
-                 ; 0000 0027 
-                 ; 0000 0028         PORTB = 2;
-0000a0 940e 00a9 	CALL SUBOPT_0x0
-                 ; 0000 0029         PORTA = seg[j];
-                 ; 0000 002A 
-                 ; 0000 002B         PORTB = 1;
-0000a2 e0e1      	LDI  R30,LOW(1)
-0000a3 bbe8      	OUT  0x18,R30
-                 ; 0000 002C     }
+                 ; 0000 0028 
+                 ; 0000 0029       PORTB = 2;
+00009e 940e 00a7 	CALL SUBOPT_0x0
+                 ; 0000 002A       PORTA = seg[j];
+                 ; 0000 002B 
+                 ; 0000 002C       PORTB = 1;
+0000a0 e0e1      	LDI  R30,LOW(1)
+0000a1 bbe8      	OUT  0x18,R30
+                 ; 0000 002D     }
                 +
-0000a4 5f2f     +SUBI R18 , LOW ( - 1 )
-0000a5 4f3f     +SBCI R19 , HIGH ( - 1 )
+0000a2 5f2f     +SUBI R18 , LOW ( - 1 )
+0000a3 4f3f     +SBCI R19 , HIGH ( - 1 )
                  	__ADDWRN 18,19,1
-0000a6 cfd8      	RJMP _0x8
+0000a4 cfdc      	RJMP _0x8
                  _0x9:
-                 ; 0000 002D   };
-0000a7 cfc3      	RJMP _0x4
-                 ; 0000 002E }
+                 ; 0000 002E   };
+0000a5 cfc7      	RJMP _0x4
+                 ; 0000 002F }
                  _0xD:
-0000a8 cfff      	RJMP _0xD
+0000a6 cfff      	RJMP _0xD
                  ; .FEND
                  	#ifndef __SLEEP_DEFINED__
                  	#endif
@@ -1362,47 +1365,47 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
                  	.CSEG
                  ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:6 WORDS
                  SUBOPT_0x0:
-0000a9 e0e2      	LDI  R30,LOW(2)
-0000aa bbe8      	OUT  0x18,R30
-0000ab 01f9      	MOVW R30,R18
-0000ac 01de      	MOVW R26,R28
-0000ad 0fee      	LSL  R30
-0000ae 1fff      	ROL  R31
-0000af 0fae      	ADD  R26,R30
-0000b0 1fbf      	ADC  R27,R31
-0000b1 91ec      	LD   R30,X
-0000b2 bbeb      	OUT  0x1B,R30
-0000b3 9508      	RET
+0000a7 e0e2      	LDI  R30,LOW(2)
+0000a8 bbe8      	OUT  0x18,R30
+0000a9 01f9      	MOVW R30,R18
+0000aa 01de      	MOVW R26,R28
+0000ab 0fee      	LSL  R30
+0000ac 1fff      	ROL  R31
+0000ad 0fae      	ADD  R26,R30
+0000ae 1fbf      	ADC  R27,R31
+0000af 91ec      	LD   R30,X
+0000b0 bbeb      	OUT  0x1B,R30
+0000b1 9508      	RET
                  
                  
                  	.CSEG
                  _delay_ms:
-0000b4 9610      	adiw r26,0
-0000b5 f039      	breq __delay_ms1
+0000b2 9610      	adiw r26,0
+0000b3 f039      	breq __delay_ms1
                  __delay_ms0:
                 +
-0000b6 ef8a     +LDI R24 , LOW ( 0xFA )
-0000b7 e090     +LDI R25 , HIGH ( 0xFA )
+0000b4 ef8a     +LDI R24 , LOW ( 0xFA )
+0000b5 e090     +LDI R25 , HIGH ( 0xFA )
                 +__DELAY_USW_LOOP :
-0000b8 9701     +SBIW R24 , 1
-0000b9 f7f1     +BRNE __DELAY_USW_LOOP
+0000b6 9701     +SBIW R24 , 1
+0000b7 f7f1     +BRNE __DELAY_USW_LOOP
                  	__DELAY_USW 0xFA
-0000ba 95a8      	wdr
-0000bb 9711      	sbiw r26,1
-0000bc f7c9      	brne __delay_ms0
+0000b8 95a8      	wdr
+0000b9 9711      	sbiw r26,1
+0000ba f7c9      	brne __delay_ms0
                  __delay_ms1:
-0000bd 9508      	ret
+0000bb 9508      	ret
                  
                  __INITLOCB:
                  __INITLOCW:
-0000be 0fac      	ADD  R26,R28
-0000bf 1fbd      	ADC  R27,R29
+0000bc 0fac      	ADD  R26,R28
+0000bd 1fbd      	ADC  R27,R29
                  __INITLOC0:
-0000c0 9005      	LPM  R0,Z+
-0000c1 920d      	ST   X+,R0
-0000c2 958a      	DEC  R24
-0000c3 f7e1      	BRNE __INITLOC0
-0000c4 9508      	RET
+0000be 9005      	LPM  R0,Z+
+0000bf 920d      	ST   X+,R0
+0000c0 958a      	DEC  R24
+0000c1 f7e1      	BRNE __INITLOC0
+0000c2 9508      	RET
                  
                  ;END OF CODE MARKER
                  __END_OF_CODE:
@@ -1425,10 +1428,10 @@ counted separately from r26..r31 here.
 ATmega32A register use summary:
 r0 :   2 r1 :   0 r2 :   0 r3 :   0 r4 :   0 r5 :   0 r6 :   0 r7 :   0 
 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 r13:   0 r14:   0 r15:   0 
-r16:   5 r17:   4 r18:   5 r19:   4 r20:   0 r21:   0 r22:   0 r23:   0 
-r24:   8 r25:   2 r26:  14 r27:   9 r28:   5 r29:   2 r30:  48 r31:   7 
+r16:   5 r17:   4 r18:   5 r19:   4 r20:   1 r21:   1 r22:   0 r23:   0 
+r24:   8 r25:   2 r26:  13 r27:   8 r28:   5 r29:   2 r30:  48 r31:   7 
 x  :   5 y  :   2 z  :   1 
-Registers used: 16 out of 35 (45.7%)
+Registers used: 18 out of 35 (51.4%)
 
 ATmega32A instruction use summary:
 .lds  :   0 .lds.l:   0 .sts  :   0 .sts.l:   0 adc   :   3 add   :   3 
@@ -1436,7 +1439,7 @@ adiw  :   1 and   :   0 andi  :   0 asr   :   0 bclr  :   0 bld   :   0
 brbc  :   0 brbs  :   0 brcc  :   0 brcs  :   0 break :   0 breq  :   1 
 brge  :   2 brhc  :   0 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 
 brlt  :   0 brmi  :   0 brne  :   5 brpl  :   0 brsh  :   0 brtc  :   0 
-brts  :   0 brvc  :   0 brvs  :   0 bset  :   0 bst   :   0 call  :   7 
+brts  :   0 brvc  :   0 brvs  :   0 bset  :   0 bst   :   0 call  :   6 
 cbi   :   0 cbr   :   0 clc   :   0 clh   :   0 cli   :   1 cln   :   0 
 clr   :   2 cls   :   0 clt   :   0 clv   :   0 clz   :   0 com   :   0 
 cp    :   0 cpc   :   2 cpi   :   2 cpse  :   0 dec   :   2 des   :   0 
@@ -1456,7 +1459,7 @@ Instructions used: 27 out of 116 (23.3%)
 ATmega32A memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x00018a    356     38    394   32768   1.2%
+[.cseg] 0x000000 0x000186    352     38    390   32768   1.2%
 [.dseg] 0x000060 0x000260      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

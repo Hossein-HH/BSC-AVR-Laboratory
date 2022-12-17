@@ -1196,8 +1196,9 @@ _main:
 ; 0000 0008 
 ; 0000 0009   int i = 0;
 ; 0000 000A   int j = 0;
-; 0000 000B 
-; 0000 000C   DDRA = 0xFF;
+; 0000 000B   int x = 0;
+; 0000 000C 
+; 0000 000D   DDRA = 0xFF;
 	SBIW R28,20
 	LDI  R24,20
 	LDI  R26,LOW(0)
@@ -1208,71 +1209,73 @@ _main:
 ;	seg -> Y+0
 ;	i -> R16,R17
 ;	j -> R18,R19
+;	x -> R20,R21
 	__GETWRN 16,17,0
 	__GETWRN 18,19,0
+	__GETWRN 20,21,0
 	LDI  R30,LOW(255)
 	OUT  0x1A,R30
-; 0000 000D   PORTA = 0x00;
+; 0000 000E   PORTA = 0x00;
 	LDI  R30,LOW(0)
 	OUT  0x1B,R30
-; 0000 000E 
-; 0000 000F   DDRB = 0xFF;
+; 0000 000F 
+; 0000 0010   DDRB = 0xFF;
 	LDI  R30,LOW(255)
 	OUT  0x17,R30
-; 0000 0010   PORTB = 0x00;
+; 0000 0011   PORTB = 0x00;
 	LDI  R30,LOW(0)
 	OUT  0x18,R30
-; 0000 0011 
-; 0000 0012   while (1) {
+; 0000 0012 
+; 0000 0013   while (1) {
 _0x4:
-; 0000 0013     PORTB = 1;
+; 0000 0014     PORTB = 1;
 	LDI  R30,LOW(1)
 	OUT  0x18,R30
-; 0000 0014     PORTA = seg[0];
+; 0000 0015     PORTA = seg[0];
 	LD   R30,Y
 	OUT  0x1B,R30
-; 0000 0015     delay_ms(10);
+; 0000 0016     delay_ms(10);
 	LDI  R26,LOW(10)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 0016     PORTB = 2;
+; 0000 0017     PORTB = 2;
 	LDI  R30,LOW(2)
 	OUT  0x18,R30
-; 0000 0017     PORTA = seg[0];
+; 0000 0018     PORTA = seg[0];
 	LD   R30,Y
 	OUT  0x1B,R30
-; 0000 0018     delay_ms(100);
+; 0000 0019     delay_ms(100);
 	LDI  R26,LOW(100)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 0019 
-; 0000 001A     PORTB = 1;
+; 0000 001A 
+; 0000 001B     PORTB = 1;
 	LDI  R30,LOW(1)
 	OUT  0x18,R30
-; 0000 001B 
-; 0000 001C     for (j = 0; j < 10; j++)
+; 0000 001C 
+; 0000 001D     for (j = 0; j < 10; j++) {
 	__GETWRN 18,19,0
 _0x8:
 	__CPWRN 18,19,10
 	BRGE _0x9
-; 0000 001D     {
-; 0000 001E         for (i = 0; i < 10; i++) {
+; 0000 001E       for (i = 0; i < 10; i++) {
 	__GETWRN 16,17,0
 _0xB:
 	__CPWRN 16,17,10
 	BRGE _0xC
-; 0000 001F             PORTB = 2;
+; 0000 001F      //   for (x = 0; x < 99; x++) {
+; 0000 0020         PORTB = 2;
 	CALL SUBOPT_0x0
-; 0000 0020             PORTA = seg[j];
-; 0000 0021             delay_ms(50);
-	LDI  R26,LOW(50)
+; 0000 0021         PORTA = seg[j];
+; 0000 0022         delay_ms(5);
+	LDI  R26,LOW(5)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 0022 
-; 0000 0023             PORTB = 1;
+; 0000 0023 
+; 0000 0024         PORTB = 1;
 	LDI  R30,LOW(1)
 	OUT  0x18,R30
-; 0000 0024             PORTA = seg[i];
+; 0000 0025         PORTA = seg[i];
 	MOVW R30,R16
 	MOVW R26,R28
 	LSL  R30
@@ -1281,29 +1284,26 @@ _0xB:
 	ADC  R27,R31
 	LD   R30,X
 	OUT  0x1B,R30
-; 0000 0025             delay_ms(50);
-	LDI  R26,LOW(50)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 0026         };
+; 0000 0026        // }
+; 0000 0027       };
 	__ADDWRN 16,17,1
 	RJMP _0xB
 _0xC:
-; 0000 0027 
-; 0000 0028         PORTB = 2;
+; 0000 0028 
+; 0000 0029       PORTB = 2;
 	CALL SUBOPT_0x0
-; 0000 0029         PORTA = seg[j];
-; 0000 002A 
-; 0000 002B         PORTB = 1;
+; 0000 002A       PORTA = seg[j];
+; 0000 002B 
+; 0000 002C       PORTB = 1;
 	LDI  R30,LOW(1)
 	OUT  0x18,R30
-; 0000 002C     }
+; 0000 002D     }
 	__ADDWRN 18,19,1
 	RJMP _0x8
 _0x9:
-; 0000 002D   };
+; 0000 002E   };
 	RJMP _0x4
-; 0000 002E }
+; 0000 002F }
 _0xD:
 	RJMP _0xD
 ; .FEND
