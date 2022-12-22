@@ -1119,9 +1119,8 @@ _tbl16_G100:
 	.DB  0x0,0x10,0x0,0x1,0x10,0x0,0x1,0x0
 
 _0x3:
-	.DB  0x3F,0x0,0x6,0x0,0x5B,0x0,0x4F,0x0
-	.DB  0x66,0x0,0x6D,0x0,0x7D,0x0,0x7,0x0
-	.DB  0x7F,0x0,0x6F,0x0
+	.DB  0x3F,0x6,0x5B,0x4F,0x66,0x6D,0x7D,0x7
+	.DB  0x7F,0x6F
 __RESET:
 	CLI
 	CLR  R30
@@ -1192,120 +1191,77 @@ __CLEAR_SRAM:
 _main:
 ; .FSTART _main
 ; 0000 0006 
-; 0000 0007   int seg[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f};
-; 0000 0008 
-; 0000 0009   int i = 0;
-; 0000 000A   int j = 0;
-; 0000 000B   int x = 0;
-; 0000 000C 
-; 0000 000D   DDRA = 0xFF;
-	SBIW R28,20
-	LDI  R24,20
+; 0000 0007   unsigned char i, j, tekrar;
+; 0000 0008   unsigned char cathode_seg[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66,
+; 0000 0009                                    0x6d, 0x7d, 0x07, 0x7f, 0x6f};
+; 0000 000A 
+; 0000 000B   DDRA = 0xFF;
+	SBIW R28,10
+	LDI  R24,10
 	LDI  R26,LOW(0)
 	LDI  R27,HIGH(0)
 	LDI  R30,LOW(_0x3*2)
 	LDI  R31,HIGH(_0x3*2)
 	CALL __INITLOCB
-;	seg -> Y+0
-;	i -> R16,R17
-;	j -> R18,R19
-;	x -> R20,R21
-	__GETWRN 16,17,0
-	__GETWRN 18,19,0
-	__GETWRN 20,21,0
+;	i -> R17
+;	j -> R16
+;	tekrar -> R19
+;	cathode_seg -> Y+0
 	LDI  R30,LOW(255)
 	OUT  0x1A,R30
-; 0000 000E   PORTA = 0x00;
-	LDI  R30,LOW(0)
-	OUT  0x1B,R30
-; 0000 000F 
-; 0000 0010   DDRB = 0xFF;
-	LDI  R30,LOW(255)
+; 0000 000C   DDRB = 0xFF;
 	OUT  0x17,R30
-; 0000 0011   PORTB = 0x00;
-	LDI  R30,LOW(0)
-	OUT  0x18,R30
-; 0000 0012 
-; 0000 0013   while (1) {
+; 0000 000D 
+; 0000 000E   while (1) {
 _0x4:
-; 0000 0014     PORTB = 1;
+; 0000 000F     for (i = 0; i <= 9; i++) {
+	LDI  R17,LOW(0)
+_0x8:
+	CPI  R17,10
+	BRSH _0x9
+; 0000 0010       for (j = 0; j < 10; j++) {
+	LDI  R16,LOW(0)
+_0xB:
+	CPI  R16,10
+	BRSH _0xC
+; 0000 0011         for (tekrar = 0; tekrar < 25; tekrar++) {
+	LDI  R19,LOW(0)
+_0xE:
+	CPI  R19,25
+	BRSH _0xF
+; 0000 0012           PORTB = 1;
 	LDI  R30,LOW(1)
 	OUT  0x18,R30
-; 0000 0015     PORTA = seg[0];
-	LD   R30,Y
-	OUT  0x1B,R30
-; 0000 0016     delay_ms(10);
-	LDI  R26,LOW(10)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 0017     PORTB = 2;
+; 0000 0013           PORTA = cathode_seg[j];
+	MOV  R30,R16
+	CALL SUBOPT_0x0
+; 0000 0014           delay_ms(10);
+; 0000 0015 
+; 0000 0016           PORTB = 2;
 	LDI  R30,LOW(2)
 	OUT  0x18,R30
-; 0000 0018     PORTA = seg[0];
-	LD   R30,Y
-	OUT  0x1B,R30
-; 0000 0019     delay_ms(100);
-	LDI  R26,LOW(100)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 001A 
-; 0000 001B     PORTB = 1;
-	LDI  R30,LOW(1)
-	OUT  0x18,R30
-; 0000 001C 
-; 0000 001D     for (j = 0; j < 10; j++) {
-	__GETWRN 18,19,0
-_0x8:
-	__CPWRN 18,19,10
-	BRGE _0x9
-; 0000 001E       for (i = 0; i < 10; i++) {
-	__GETWRN 16,17,0
-_0xB:
-	__CPWRN 16,17,10
-	BRGE _0xC
-; 0000 001F      //   for (x = 0; x < 99; x++) {
-; 0000 0020         PORTB = 2;
+; 0000 0017 
+; 0000 0018           PORTA = cathode_seg[i];
+	MOV  R30,R17
 	CALL SUBOPT_0x0
-; 0000 0021         PORTA = seg[j];
-; 0000 0022         delay_ms(5);
-	LDI  R26,LOW(5)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 0023 
-; 0000 0024         PORTB = 1;
-	LDI  R30,LOW(1)
-	OUT  0x18,R30
-; 0000 0025         PORTA = seg[i];
-	MOVW R30,R16
-	MOVW R26,R28
-	LSL  R30
-	ROL  R31
-	ADD  R26,R30
-	ADC  R27,R31
-	LD   R30,X
-	OUT  0x1B,R30
-; 0000 0026        // }
-; 0000 0027       };
-	__ADDWRN 16,17,1
+; 0000 0019           delay_ms(10);
+; 0000 001A         }
+	SUBI R19,-1
+	RJMP _0xE
+_0xF:
+; 0000 001B       };
+	SUBI R16,-1
 	RJMP _0xB
 _0xC:
-; 0000 0028 
-; 0000 0029       PORTB = 2;
-	CALL SUBOPT_0x0
-; 0000 002A       PORTA = seg[j];
-; 0000 002B 
-; 0000 002C       PORTB = 1;
-	LDI  R30,LOW(1)
-	OUT  0x18,R30
-; 0000 002D     }
-	__ADDWRN 18,19,1
+; 0000 001C     }
+	SUBI R17,-1
 	RJMP _0x8
 _0x9:
-; 0000 002E   };
+; 0000 001D   };
 	RJMP _0x4
-; 0000 002F }
-_0xD:
-	RJMP _0xD
+; 0000 001E }
+_0x10:
+	RJMP _0x10
 ; .FEND
 	#ifndef __SLEEP_DEFINED__
 	#define __SLEEP_DEFINED__
@@ -1328,17 +1284,15 @@ _0xD:
 	.CSEG
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:6 WORDS
 SUBOPT_0x0:
-	LDI  R30,LOW(2)
-	OUT  0x18,R30
-	MOVW R30,R18
+	LDI  R31,0
 	MOVW R26,R28
-	LSL  R30
-	ROL  R31
 	ADD  R26,R30
 	ADC  R27,R31
 	LD   R30,X
 	OUT  0x1B,R30
-	RET
+	LDI  R26,LOW(10)
+	LDI  R27,0
+	JMP  _delay_ms
 
 
 	.CSEG
