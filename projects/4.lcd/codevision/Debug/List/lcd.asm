@@ -1123,10 +1123,11 @@ _tbl10_G101:
 _tbl16_G101:
 	.DB  0x0,0x10,0x0,0x1,0x10,0x0,0x1,0x0
 
+_0x3:
+	.DB  0x3F,0x6,0x5B,0x4F,0x66,0x6D,0x7D,0x7
+	.DB  0x7F,0x6F
 _0x0:
-	.DB  0x44,0x45,0x43,0x20,0x3A,0x20,0x25,0x64
-	.DB  0x0,0x44,0x45,0x43,0x20,0x3A,0x20,0x30
-	.DB  0x25,0x64,0x0,0x42,0x49,0x4E,0x20,0x3A
+	.DB  0x4E,0x75,0x6D,0x62,0x65,0x72,0x20,0x3D
 	.DB  0x20,0x25,0x64,0x0
 _0x2000003:
 	.DB  0x80,0xC0
@@ -1228,329 +1229,144 @@ __GLOBAL_INI_END:
 	#endif
 ;#include <stdio.h>
 ;
-;//  #asm
-;// .equ __lcd_port = 0x1b; // PORTA
-;//  .equ __lcd_port = 0x18; // PORTB
-;// .equ __lcd_port = 0x15; // PORTC
-;// .equ __lcd_port = 0x12; // PORTD
-;// #endasm
-;
-;//! char *decToBinary(int n) {
-;//   int binaryNum[8];
-;//   int binaryResult = 0;
-;//   char *result;
-;
-;//   int i = 0;
-;//   int j = 0;
-;//   int digitCounter = 0;
-;
-;//   while (n > 0) {
-;//     binaryNum[i] = n % 2;
-;//     n = n / 2;
-;//     i++;
-;//   }
-;
-;//   for (j = i - 1; j >= 0; j--)
-;//     binaryResult = (binaryResult * 10) + binaryNum[j];
-;//   //   printf("%d", binaryNum[j]);
-;
-;//   while (binaryResult != 0) {
-;//     result[7 - digitCounter] = char(binaryResult % 10);
-;//     binaryResult /= 10;
-;//     digitCounter++;
-;//   }
-;
-;//   while (digitCounter < 8)
-;//     result[digitCounter++] = '0';
-;
-;//   return result;
-;//! }
-;
-;int decToBinary(int n) {
-; 0000 002C int decToBinary(int n) {
+;void main(void) {
+; 0000 0006 void main(void) {
 
 	.CSEG
-_decToBinary:
-; .FSTART _decToBinary
-; 0000 002D   int binaryNum[8];
-; 0000 002E   int binaryResult = 0;
-; 0000 002F 
-; 0000 0030   int i = 0;
-; 0000 0031   int j = 0;
-; 0000 0032   int digitCounter = 0;
-; 0000 0033 
-; 0000 0034   while (n > 0) {
-	ST   -Y,R27
-	ST   -Y,R26
-	SBIW R28,18
-	LDI  R30,LOW(0)
-	ST   Y,R30
-	STD  Y+1,R30
-	CALL __SAVELOCR6
-;	n -> Y+24
-;	binaryNum -> Y+8
-;	binaryResult -> R16,R17
-;	i -> R18,R19
-;	j -> R20,R21
-;	digitCounter -> Y+6
-	CALL SUBOPT_0x0
-_0x3:
-	LDD  R26,Y+24
-	LDD  R27,Y+24+1
-	CALL __CPW02
-	BRGE _0x5
-; 0000 0035     binaryNum[i] = n % 2;
-	MOVW R30,R18
-	MOVW R26,R28
-	ADIW R26,8
-	LSL  R30
-	ROL  R31
-	ADD  R30,R26
-	ADC  R31,R27
-	MOVW R0,R30
-	LDD  R30,Y+24
-	LDD  R31,Y+24+1
-	LDI  R26,LOW(1)
-	LDI  R27,HIGH(1)
-	CALL __MANDW12
-	MOVW R26,R0
-	ST   X+,R30
-	ST   X,R31
-; 0000 0036     n = n / 2;
-	LDD  R26,Y+24
-	LDD  R27,Y+24+1
-	LDI  R30,LOW(2)
-	LDI  R31,HIGH(2)
-	CALL __DIVW21
-	STD  Y+24,R30
-	STD  Y+24+1,R31
-; 0000 0037     i++;
-	__ADDWRN 18,19,1
-; 0000 0038   }
-	RJMP _0x3
-_0x5:
-; 0000 0039 
-; 0000 003A   for (j = i - 1; j >= 0; j--)
-	MOVW R30,R18
-	SBIW R30,1
-	MOVW R20,R30
-_0x7:
-	TST  R21
-	BRMI _0x8
-; 0000 003B     binaryResult = (binaryResult * 10) + binaryNum[j];
-	MOVW R30,R16
-	LDI  R26,LOW(10)
-	LDI  R27,HIGH(10)
-	CALL __MULW12
-	MOVW R0,R30
-	MOVW R30,R20
-	MOVW R26,R28
-	ADIW R26,8
-	LSL  R30
-	ROL  R31
-	ADD  R26,R30
-	ADC  R27,R31
-	CALL __GETW1P
-	ADD  R30,R0
-	ADC  R31,R1
-	MOVW R16,R30
-	__SUBWRN 20,21,1
-	RJMP _0x7
-_0x8:
-; 0000 003E return binaryResult;
-	MOVW R30,R16
-	CALL __LOADLOCR6
-	ADIW R28,26
-	RET
-; 0000 003F }
-; .FEND
-;
-;void main(void) {
-; 0000 0041 void main(void) {
 _main:
 ; .FSTART _main
-; 0000 0042 
-; 0000 0043   int i = 0;
-; 0000 0044   int j = 0;
-; 0000 0045 
-; 0000 0046   int temp1 = 0;
-; 0000 0047   int temp2 = 0;
-; 0000 0048 
-; 0000 0049   char decimalNum[16];
-; 0000 004A   char binaryNum[16];
-; 0000 004B   int binRes;
-; 0000 004C //!   char *binRes;
-; 0000 004D 
-; 0000 004E   PORTA = 0x00;
-	SBIW R28,36
-	LDI  R30,LOW(0)
-	STD  Y+34,R30
-	STD  Y+35,R30
-;	i -> R16,R17
-;	j -> R18,R19
-;	temp1 -> R20,R21
-;	temp2 -> Y+34
-;	decimalNum -> Y+18
-;	binaryNum -> Y+2
-;	binRes -> Y+0
-	CALL SUBOPT_0x0
+; 0000 0007 
+; 0000 0008   unsigned char i, j, tekrar;
+; 0000 0009   unsigned char cathode_seg[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66,
+; 0000 000A                                    0x6d, 0x7d, 0x07, 0x7f, 0x6f};
+; 0000 000B 
+; 0000 000C   char number[16];
+; 0000 000D 
+; 0000 000E   PORTA = 0x00;
+	SBIW R28,26
+	LDI  R24,10
+	LDI  R26,LOW(16)
+	LDI  R27,HIGH(16)
+	LDI  R30,LOW(_0x3*2)
+	LDI  R31,HIGH(_0x3*2)
+	CALL __INITLOCB
+;	i -> R17
+;	j -> R16
+;	tekrar -> R19
+;	cathode_seg -> Y+16
+;	number -> Y+0
 	LDI  R30,LOW(0)
 	OUT  0x1B,R30
-; 0000 004F   DDRA = 0xFF;
+; 0000 000F   PORTB = 0x00;
+	OUT  0x18,R30
+; 0000 0010   PORTC = 0x00;
+	OUT  0x15,R30
+; 0000 0011   PORTD = 0x00;
+	OUT  0x12,R30
+; 0000 0012 
+; 0000 0013   DDRA = 0xFF;
 	LDI  R30,LOW(255)
 	OUT  0x1A,R30
-; 0000 0050 
-; 0000 0051   PORTB = 0x00;
-	LDI  R30,LOW(0)
-	OUT  0x18,R30
-; 0000 0052   DDRB = 0xFF;
-	LDI  R30,LOW(255)
+; 0000 0014   DDRB = 0xFF;
 	OUT  0x17,R30
-; 0000 0053 
-; 0000 0054   PORTD = 0x00;
-	LDI  R30,LOW(0)
-	OUT  0x12,R30
-; 0000 0055   DDRD = 0xFF;
-	LDI  R30,LOW(255)
+; 0000 0015   DDRC = 0xFF;
+	OUT  0x14,R30
+; 0000 0016   DDRD = 0xFF;
 	OUT  0x11,R30
-; 0000 0056 
-; 0000 0057   lcd_init(16);
+; 0000 0017 
+; 0000 0018   lcd_init(16);
 	LDI  R26,LOW(16)
 	RCALL _lcd_init
-; 0000 0058 
-; 0000 0059   while (1) {
-_0x9:
-; 0000 005A     for (i = 0; i < 100; i++) {
-	__GETWRN 16,17,0
-_0xD:
-	__CPWRN 16,17,100
-	BRLT PC+2
-	RJMP _0xE
-; 0000 005B       temp1 = i % 10;
-	MOVW R26,R16
-	LDI  R30,LOW(10)
-	LDI  R31,HIGH(10)
-	CALL __MODW21
-	MOVW R20,R30
-; 0000 005C       temp2 = i / 10;
-	MOVW R26,R16
-	LDI  R30,LOW(10)
-	LDI  R31,HIGH(10)
-	CALL __DIVW21
-	STD  Y+34,R30
-	STD  Y+34+1,R31
-; 0000 005D 
-; 0000 005E       for (j = 0; j < 50; j++) {
-	__GETWRN 18,19,0
-_0x10:
-	__CPWRN 18,19,50
-	BRGE _0x11
-; 0000 005F         PORTA = temp1 + 16;
-	MOV  R30,R20
-	SUBI R30,-LOW(16)
-	OUT  0x1B,R30
-; 0000 0060         delay_ms(5);
-	LDI  R26,LOW(5)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 0061         PORTA = temp2 + 32;
-	LDD  R30,Y+34
-	SUBI R30,-LOW(32)
-	OUT  0x1B,R30
-; 0000 0062         delay_ms(5);
-	LDI  R26,LOW(5)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 0063       }
-	__ADDWRN 18,19,1
-	RJMP _0x10
-_0x11:
-; 0000 0064 
-; 0000 0065       // lcd_clear();
-; 0000 0066       lcd_gotoxy(4, 0);
-	LDI  R30,LOW(4)
+; 0000 0019 
+; 0000 001A   while (1) {
+_0x4:
+; 0000 001B     for (i = 0; i <= 9; i++) {
+	LDI  R17,LOW(0)
+_0x8:
+	CPI  R17,10
+	BRSH _0x9
+; 0000 001C       for (j = 0; j < 10; j++) {
+	LDI  R16,LOW(0)
+_0xB:
+	CPI  R16,10
+	BRSH _0xC
+; 0000 001D         lcd_gotoxy(2, 0);
+	LDI  R30,LOW(2)
 	ST   -Y,R30
 	LDI  R26,LOW(0)
 	RCALL _lcd_gotoxy
-; 0000 0067 
-; 0000 0068       (i > 9) ? sprintf(decimalNum, "DEC : %d", i)
-; 0000 0069               : sprintf(decimalNum, "DEC : 0%d", i);
-	__CPWRN 16,17,10
-	BRLT _0x12
+; 0000 001E         sprintf(number, "Number = %d", (i * 10) + j);
 	MOVW R30,R28
-	ADIW R30,18
 	ST   -Y,R31
 	ST   -Y,R30
 	__POINTW1FN _0x0,0
-	RJMP _0x16
-_0x12:
-	MOVW R30,R28
-	ADIW R30,18
 	ST   -Y,R31
 	ST   -Y,R30
-	__POINTW1FN _0x0,9
-_0x16:
-	ST   -Y,R31
-	ST   -Y,R30
-	MOVW R30,R16
-	CALL SUBOPT_0x1
-; 0000 006A 
-; 0000 006B       lcd_puts(decimalNum);
+	LDI  R30,LOW(10)
+	MUL  R30,R17
+	MOVW R30,R0
+	MOVW R26,R30
+	MOV  R30,R16
+	LDI  R31,0
+	ADD  R30,R26
+	ADC  R31,R27
+	CALL __CWD1
+	CALL __PUTPARD1
+	LDI  R24,4
+	CALL _sprintf
+	ADIW R28,8
+; 0000 001F         lcd_puts(number);
 	MOVW R26,R28
-	ADIW R26,18
 	RCALL _lcd_puts
-; 0000 006C       // lcd_putsf("string");
-; 0000 006D 
-; 0000 006E       lcd_gotoxy(1, 1);
-	LDI  R30,LOW(1)
-	ST   -Y,R30
-	LDI  R26,LOW(1)
-	RCALL _lcd_gotoxy
-; 0000 006F       binRes = decToBinary(i);
-	MOVW R26,R16
-	RCALL _decToBinary
-	ST   Y,R30
-	STD  Y+1,R31
-; 0000 0070 
-; 0000 0071       sprintf(binaryNum, "BIN : %d", binRes);
-	MOVW R30,R28
-	ADIW R30,2
-	ST   -Y,R31
-	ST   -Y,R30
-	__POINTW1FN _0x0,19
-	ST   -Y,R31
-	ST   -Y,R30
-	LDD  R30,Y+4
-	LDD  R31,Y+4+1
-	CALL SUBOPT_0x1
-; 0000 0072 
-; 0000 0073       //! sprintf(binaryNum, "BIN : %d%d%d%d%d%d%d%d", binRes[0], binRes[1],
-; 0000 0074       //         binRes[2], binRes[3], binRes[4], binRes[5], binRes[6], binRes[7]);
-; 0000 0075       lcd_puts(binaryNum);
-	MOVW R26,R28
-	ADIW R26,2
-	RCALL _lcd_puts
-; 0000 0076 
-; 0000 0077       delay_ms(100);
-	LDI  R26,LOW(100)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 0078 
-; 0000 0079       PORTD = i;
-	OUT  0x12,R16
-; 0000 007A       delay_ms(100);
-	LDI  R26,LOW(100)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 007B     };
-	__ADDWRN 16,17,1
-	RJMP _0xD
+; 0000 0020         delay_ms(10);
+	CALL SUBOPT_0x0
+; 0000 0021 
+; 0000 0022         PORTD = (i * 10) + j;
+	LDI  R26,LOW(10)
+	MULS R17,R26
+	MOVW R30,R0
+	ADD  R30,R16
+	OUT  0x12,R30
+; 0000 0023         delay_ms(10);
+	CALL SUBOPT_0x0
+; 0000 0024 
+; 0000 0025         for (tekrar = 0; tekrar < 25; tekrar++) {
+	LDI  R19,LOW(0)
 _0xE:
-; 0000 007C   }
-	RJMP _0x9
-; 0000 007D }
-_0x15:
-	RJMP _0x15
+	CPI  R19,25
+	BRSH _0xF
+; 0000 0026           PORTC = 1;
+	LDI  R30,LOW(1)
+	OUT  0x15,R30
+; 0000 0027           PORTA = cathode_seg[j];
+	MOV  R30,R16
+	CALL SUBOPT_0x1
+; 0000 0028           delay_ms(10);
+; 0000 0029 
+; 0000 002A           PORTC = 2;
+	LDI  R30,LOW(2)
+	OUT  0x15,R30
+; 0000 002B           PORTA = cathode_seg[i];
+	MOV  R30,R17
+	CALL SUBOPT_0x1
+; 0000 002C           delay_ms(10);
+; 0000 002D         }
+	SUBI R19,-1
+	RJMP _0xE
+_0xF:
+; 0000 002E       }
+	SUBI R16,-1
+	RJMP _0xB
+_0xC:
+; 0000 002F     }
+	SUBI R17,-1
+	RJMP _0x8
+_0x9:
+; 0000 0030   }
+	RJMP _0x4
+; 0000 0031 }
+_0x10:
+	RJMP _0x10
 ; .FEND
 	#ifndef __SLEEP_DEFINED__
 	#define __SLEEP_DEFINED__
@@ -2247,21 +2063,22 @@ __base_y_G100:
 	.BYTE 0x4
 
 	.CSEG
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 4 TIMES, CODE SIZE REDUCTION:3 WORDS
 SUBOPT_0x0:
-	__GETWRN 16,17,0
-	__GETWRN 18,19,0
-	__GETWRN 20,21,0
-	RET
+	LDI  R26,LOW(10)
+	LDI  R27,0
+	JMP  _delay_ms
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:3 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:4 WORDS
 SUBOPT_0x1:
-	CALL __CWD1
-	CALL __PUTPARD1
-	LDI  R24,4
-	CALL _sprintf
-	ADIW R28,8
-	RET
+	LDI  R31,0
+	MOVW R26,R28
+	ADIW R26,16
+	ADD  R26,R30
+	ADC  R27,R31
+	LD   R30,X
+	OUT  0x1B,R30
+	RJMP SUBOPT_0x0
 
 ;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:1 WORDS
 SUBOPT_0x2:
@@ -2367,106 +2184,6 @@ __CWD1:
 	MOV  R23,R22
 	RET
 
-__MULW12U:
-	MUL  R31,R26
-	MOV  R31,R0
-	MUL  R30,R27
-	ADD  R31,R0
-	MUL  R30,R26
-	MOV  R30,R0
-	ADD  R31,R1
-	RET
-
-__MULW12:
-	RCALL __CHKSIGNW
-	RCALL __MULW12U
-	BRTC __MULW121
-	RCALL __ANEGW1
-__MULW121:
-	RET
-
-__DIVW21U:
-	CLR  R0
-	CLR  R1
-	LDI  R25,16
-__DIVW21U1:
-	LSL  R26
-	ROL  R27
-	ROL  R0
-	ROL  R1
-	SUB  R0,R30
-	SBC  R1,R31
-	BRCC __DIVW21U2
-	ADD  R0,R30
-	ADC  R1,R31
-	RJMP __DIVW21U3
-__DIVW21U2:
-	SBR  R26,1
-__DIVW21U3:
-	DEC  R25
-	BRNE __DIVW21U1
-	MOVW R30,R26
-	MOVW R26,R0
-	RET
-
-__DIVW21:
-	RCALL __CHKSIGNW
-	RCALL __DIVW21U
-	BRTC __DIVW211
-	RCALL __ANEGW1
-__DIVW211:
-	RET
-
-__MODW21:
-	CLT
-	SBRS R27,7
-	RJMP __MODW211
-	COM  R26
-	COM  R27
-	ADIW R26,1
-	SET
-__MODW211:
-	SBRC R31,7
-	RCALL __ANEGW1
-	RCALL __DIVW21U
-	MOVW R30,R26
-	BRTC __MODW212
-	RCALL __ANEGW1
-__MODW212:
-	RET
-
-__MANDW12:
-	CLT
-	SBRS R31,7
-	RJMP __MANDW121
-	RCALL __ANEGW1
-	SET
-__MANDW121:
-	AND  R30,R26
-	AND  R31,R27
-	BRTC __MANDW122
-	RCALL __ANEGW1
-__MANDW122:
-	RET
-
-__CHKSIGNW:
-	CLT
-	SBRS R31,7
-	RJMP __CHKSW1
-	RCALL __ANEGW1
-	SET
-__CHKSW1:
-	SBRS R27,7
-	RJMP __CHKSW2
-	COM  R26
-	COM  R27
-	ADIW R26,1
-	BLD  R0,0
-	INC  R0
-	BST  R0,0
-__CHKSW2:
-	RET
-
 __GETW1P:
 	LD   R30,X+
 	LD   R31,X
@@ -2484,12 +2201,6 @@ __PUTPARD1:
 	ST   -Y,R22
 	ST   -Y,R31
 	ST   -Y,R30
-	RET
-
-__CPW02:
-	CLR  R0
-	CP   R0,R26
-	CPC  R0,R27
 	RET
 
 __SAVELOCR6:
@@ -2516,6 +2227,17 @@ __LOADLOCR3:
 __LOADLOCR2:
 	LDD  R17,Y+1
 	LD   R16,Y
+	RET
+
+__INITLOCB:
+__INITLOCW:
+	ADD  R26,R28
+	ADC  R27,R29
+__INITLOC0:
+	LPM  R0,Z+
+	ST   X+,R0
+	DEC  R24
+	BRNE __INITLOC0
 	RET
 
 ;END OF CODE MARKER

@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode2\Debug\List\0_99_counter_m2.asm Sat Dec 10 12:50:06 2022
+AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode2\Debug\List\0_99_counter_m2.asm Wed Dec 28 19:33:32 2022
 
                  
                  
@@ -1248,7 +1248,7 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
                  ; 0000 0013     PORTB = seg[0];
 00006b bbe8      	OUT  0x18,R30
                  ; 0000 0014 
-                 ; 0000 0015     for (i = 0; i <= 99; i++) {
+                 ; 0000 0015     for (i = 0; i < 100; i++) {
                 +
 00006c e000     +LDI R16 , LOW ( 0 )
 00006d e010     +LDI R17 , HIGH ( 0 )

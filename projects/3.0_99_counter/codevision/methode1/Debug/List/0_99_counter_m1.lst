@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode1\Debug\List\0_99_counter_m1.asm Sat Dec 10 12:47:29 2022
+AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode1\Debug\List\0_99_counter_m1.asm Wed Dec 28 19:32:59 2022
 
                  
                  
@@ -1288,9 +1288,9 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
 00007f 940e 008e 	CALL SUBOPT_0x0
 000081 bbe8      	OUT  0x18,R30
                  ; 0000 001B 
-                 ; 0000 001C         delay_ms(300);
-000082 e2ac      	LDI  R26,LOW(300)
-000083 e0b1      	LDI  R27,HIGH(300)
+                 ; 0000 001C         delay_ms(100);
+000082 e6a4      	LDI  R26,LOW(100)
+000083 e0b0      	LDI  R27,0
 000084 940e 0095 	CALL _delay_ms
                  ; 0000 001D       };
                 +

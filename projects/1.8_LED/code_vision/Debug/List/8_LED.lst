@@ -1,8 +1,8 @@
 
-AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AZRiz\Projects\1.8_LED\code_vision\Debug\List\8_LED.asm Thu Nov 24 08:55:03 2022
+AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\1.8_LED\code_vision\Debug\List\8_LED.asm Wed Dec 28 19:39:16 2022
 
-D:\#Uni\#Terme 7\AZRiz\Projects\1.8_LED\code_vision\Debug\List\8_LED.asm(1087): warning: Register r4 already defined by the .DEF directive
-D:\#Uni\#Terme 7\AZRiz\Projects\1.8_LED\code_vision\Debug\List\8_LED.asm(1088): warning: Register r5 already defined by the .DEF directive
+D:\#Uni\#Terme 7\AVR_laboratory\projects\1.8_LED\code_vision\Debug\List\8_LED.asm(1087): warning: Register r4 already defined by the .DEF directive
+D:\#Uni\#Terme 7\AVR_laboratory\projects\1.8_LED\code_vision\Debug\List\8_LED.asm(1088): warning: Register r5 already defined by the .DEF directive
                  
                  
                  ;CodeVisionAVR C Compiler V3.12 Advanced
@@ -1139,14 +1139,14 @@ D:\#Uni\#Terme 7\AZRiz\Projects\1.8_LED\code_vision\Debug\List\8_LED.asm(1088): 
 000033 0000      	.DB  0x0,0x0
                  
                  _0x2080060:
-D:\#Uni\#Terme 7\AZRiz\Projects\1.8_LED\code_vision\Debug\List\8_LED.asm(1130): warning: .cseg .db misalignment - padding zero byte
+D:\#Uni\#Terme 7\AVR_laboratory\projects\1.8_LED\code_vision\Debug\List\8_LED.asm(1130): warning: .cseg .db misalignment - padding zero byte
 000034 0001      	.DB  0x1
                  _0x2080000:
 000035 4e2d
 000036 4e41
 000037 4900
 000038 464e      	.DB  0x2D,0x4E,0x41,0x4E,0x0,0x49,0x4E,0x46
-D:\#Uni\#Terme 7\AZRiz\Projects\1.8_LED\code_vision\Debug\List\8_LED.asm(1133): warning: .cseg .db misalignment - padding zero byte
+D:\#Uni\#Terme 7\AVR_laboratory\projects\1.8_LED\code_vision\Debug\List\8_LED.asm(1133): warning: .cseg .db misalignment - padding zero byte
 000039 0000      	.DB  0x0
                  
                  __GLOBAL_INI_TBL:

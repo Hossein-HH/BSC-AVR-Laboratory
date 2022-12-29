@@ -124,8 +124,8 @@ WatchAVR8LAutoVariables=0
 UseEEPROMLocation0=1
 RebuildAll=0
 LinkageInformationPresent=1
-COFFileTimeStamp=1435907477
-Build=39
+COFFileTimeStamp=1436327211
+Build=51
 [DefinedSymbolsDebug]
 Count=0
 [Compiler]
@@ -227,7 +227,7 @@ UseEEPROMLocation0=1
 RebuildAll=1
 LinkageInformationPresent=0
 COFFileTimeStamp=-1
-Build=39
+Build=51
 [DefinedSymbols]
 Count=0
 [StartUp]
@@ -359,8 +359,8 @@ L13=Enhanced function parameters passing: Yes
 L14=Automatic register allocation: Yes
 L15=Smart register allocation: Yes
 L16=
-L17=Build: 38
-L18=10889 line(s) compiled
+L17=Build: 50
+L18=10841 line(s) compiled
 L19=No errors
 L20=No warnings
 L21=
@@ -379,25 +379,31 @@ L33=
 L34=Heap size: 0 byte(s)
 L35=
 L36=EEPROM usage: 0 byte(s), 0.0% of EEPROM
-L37=Program size: 1167 words (2334 bytes), 7.1% of FLASH
-L38=65 words (130 bytes), 5.3% reduced by Code Compression
+L37=Program size: 1146 words (2292 bytes), 7.0% of FLASH
+L38=61 words (122 bytes), 5.1% reduced by Code Compression
 Lines=38
 [BuildInfoAssembler]
 L1=AVRASM: AVR macro assembler 2.1.30 (build 592 Nov  7 2008 12:38:17)
 L2=Copyright (C) 1995-2008 ATMEL Corporation
 L3=
-L4=D:\#Uni\#Terme 7\AVR_laboratory\projects\5.push_button\codevision\Debug\List\push_button.asm(2627): No EEPROM data, deleting D:\#Uni\#Terme 7\AVR_laboratory\projects\5.push_button\codevision\Debug\Exe\push_button.eep
+L4=D:\#Uni\#Terme 7\AVR_laboratory\projects\5.push_button\codevision\Debug\List\push_button.asm(2557): No EEPROM data, deleting D:\#Uni\#Terme 7\AVR_laboratory\projects\5.push_button\codevision\Debug\Exe\push_button.eep
 L5=
 L6=ATmega32A memory use summary [bytes]:
 L7=Segment   Begin    End      Code   Data   Used    Size   Use%
 L8=---------------------------------------------------------------
-L9=[.cseg] 0x000000 0x00091e   2262     72   2334   32768   7.1%
+L9=[.cseg] 0x000000 0x0008f4   2220     72   2292   32768   7.0%
 L10=[.dseg] 0x000060 0x00026e      0     14     14    2048   0.7%
 L11=[.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 L12=
 Lines=12
 [FoldedCode1]
 Blocks=0
+[Bookmarks0]
+Row=0
+Column=0
+ScrollPosX=0
+ScrollPosY=0
+TimeStamp=1436327211
 [HeadersList]
 Files=1
 F1=D:\#Uni\#Terme 7\AVR_laboratory\projects\5.push_button\codevision\push_button.c
@@ -410,9 +416,3 @@ F4=C:\cvavr\inc\mega32_bits.h
 F5=C:\cvavr\inc\stdio.h
 F6=C:\cvavr\inc\io.h
 F7=C:\cvavr\inc\stdarg.h
-[Bookmarks0]
-Row=0
-Column=0
-ScrollPosX=0
-ScrollPosY=0
-TimeStamp=1435969992

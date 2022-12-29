@@ -27,116 +27,86 @@
 ;PCODE: $0000000C VOL: 0
 ;#include <stdio.h>
 ;
-;//  #asm
-;// .equ __lcd_port = 0x1b; // PORTA
-;//  .equ __lcd_port = 0x18; // PORTB
-;// .equ __lcd_port = 0x15; // PORTC
-;// .equ __lcd_port = 0x12; // PORTD
-;// #endasm
-;
-;//! char *decToBinary(int n) {
-;//   int binaryNum[8];
-;//   int binaryResult = 0;
-;//   char *result;
-;
-;//   int i = 0;
-;//   int j = 0;
-;//   int digitCounter = 0;
-;
-;//   while (n > 0) {
-;//     binaryNum[i] = n % 2;
-;//     n = n / 2;
-;//     i++;
-;//   }
-;
-;//   for (j = i - 1; j >= 0; j--)
-;//     binaryResult = (binaryResult * 10) + binaryNum[j];
-;//   //   printf("%d", binaryNum[j]);
-;
-;//   while (binaryResult != 0) {
-;//     result[7 - digitCounter] = char(binaryResult % 10);
-;//     binaryResult /= 10;
-;//     digitCounter++;
-;//   }
-;
-;//   while (digitCounter < 8)
-;//     result[digitCounter++] = '0';
-;
-;//   return result;
-;//! }
-;
-;int decToBinary(int n) {
-; 0000 002C int decToBinary(int n) {
+;void main(void) {
+; 0000 0006 void main(void) {
 
 	.CSEG
 ;PCODE: $0000000D VOL: 0
+; 0000 0007 
+; 0000 0008   unsigned char i, j, tekrar;
+; 0000 0009   unsigned char cathode_seg[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66,
+; 0000 000A                                    0x6d, 0x7d, 0x07, 0x7f, 0x6f};
+; 0000 000B 
+; 0000 000C   char number[16];
+; 0000 000D 
+; 0000 000E   PORTA = 0x00;
 ;PCODE: $0000000E VOL: 0
-; 0000 002D   int binaryNum[8];
-; 0000 002E   int binaryResult = 0;
-; 0000 002F 
-; 0000 0030   int i = 0;
-; 0000 0031   int j = 0;
-; 0000 0032   int digitCounter = 0;
-; 0000 0033 
-; 0000 0034   while (n > 0) {
 ;PCODE: $0000000F VOL: 0
 ;PCODE: $00000010 VOL: 0
 ;PCODE: $00000011 VOL: 0
 ;PCODE: $00000012 VOL: 0
+;	i -> R17
+;	j -> R16
+;	tekrar -> R19
+;	cathode_seg -> Y+16
+;	number -> Y+0
 ;PCODE: $00000013 VOL: 0
 ;PCODE: $00000014 VOL: 0
+; 0000 000F   PORTB = 0x00;
 ;PCODE: $00000015 VOL: 0
-;	n -> Y+24
-;	binaryNum -> Y+8
-;	binaryResult -> R16,R17
-;	i -> R18,R19
-;	j -> R20,R21
-;	digitCounter -> Y+6
 ;PCODE: $00000016 VOL: 0
+; 0000 0010   PORTC = 0x00;
 ;PCODE: $00000017 VOL: 0
 ;PCODE: $00000018 VOL: 0
+; 0000 0011   PORTD = 0x00;
 ;PCODE: $00000019 VOL: 0
 ;PCODE: $0000001A VOL: 0
+; 0000 0012 
+; 0000 0013   DDRA = 0xFF;
 ;PCODE: $0000001B VOL: 0
 ;PCODE: $0000001C VOL: 0
+; 0000 0014   DDRB = 0xFF;
 ;PCODE: $0000001D VOL: 0
 ;PCODE: $0000001E VOL: 0
+; 0000 0015   DDRC = 0xFF;
 ;PCODE: $0000001F VOL: 0
-; 0000 0035     binaryNum[i] = n % 2;
 ;PCODE: $00000020 VOL: 0
+; 0000 0016   DDRD = 0xFF;
 ;PCODE: $00000021 VOL: 0
 ;PCODE: $00000022 VOL: 0
+; 0000 0017 
+; 0000 0018   lcd_init(16);
 ;PCODE: $00000023 VOL: 0
 ;PCODE: $00000024 VOL: 0
+; 0000 0019 
+; 0000 001A   while (1) {
 ;PCODE: $00000025 VOL: 0
+; 0000 001B     for (i = 0; i <= 9; i++) {
 ;PCODE: $00000026 VOL: 0
 ;PCODE: $00000027 VOL: 0
 ;PCODE: $00000028 VOL: 0
 ;PCODE: $00000029 VOL: 0
-; 0000 0036     n = n / 2;
 ;PCODE: $0000002A VOL: 0
 ;PCODE: $0000002B VOL: 0
 ;PCODE: $0000002C VOL: 0
 ;PCODE: $0000002D VOL: 0
-; 0000 0037     i++;
 ;PCODE: $0000002E VOL: 0
+; 0000 001C       for (j = 0; j < 10; j++) {
 ;PCODE: $0000002F VOL: 0
-; 0000 0038   }
 ;PCODE: $00000030 VOL: 0
 ;PCODE: $00000031 VOL: 0
-; 0000 0039 
-; 0000 003A   for (j = i - 1; j >= 0; j--)
 ;PCODE: $00000032 VOL: 0
 ;PCODE: $00000033 VOL: 0
 ;PCODE: $00000034 VOL: 0
 ;PCODE: $00000035 VOL: 0
 ;PCODE: $00000036 VOL: 0
 ;PCODE: $00000037 VOL: 0
+; 0000 001D         lcd_gotoxy(2, 0);
 ;PCODE: $00000038 VOL: 0
 ;PCODE: $00000039 VOL: 0
 ;PCODE: $0000003A VOL: 0
-; 0000 003B     binaryResult = (binaryResult * 10) + binaryNum[j];
 ;PCODE: $0000003B VOL: 0
+; 0000 001E         sprintf(number, "Number = %d", (i * 10) + j);
 ;PCODE: $0000003C VOL: 0
 ;PCODE: $0000003D VOL: 0
 ;PCODE: $0000003E VOL: 0
@@ -152,227 +122,88 @@
 ;PCODE: $00000048 VOL: 0
 ;PCODE: $00000049 VOL: 0
 ;PCODE: $0000004A VOL: 0
-; 0000 003E return binaryResult;
 ;PCODE: $0000004B VOL: 0
 ;PCODE: $0000004C VOL: 0
+; 0000 001F         lcd_puts(number);
 ;PCODE: $0000004D VOL: 0
 ;PCODE: $0000004E VOL: 0
-; 0000 003F }
+; 0000 0020         delay_ms(10);
 ;PCODE: $0000004F VOL: 0
-;
-;void main(void) {
-; 0000 0041 void main(void) {
 ;PCODE: $00000050 VOL: 0
-; 0000 0042 
-; 0000 0043   int i = 0;
-; 0000 0044   int j = 0;
-; 0000 0045 
-; 0000 0046   int temp1 = 0;
-; 0000 0047   int temp2 = 0;
-; 0000 0048 
-; 0000 0049   char decimalNum[16];
-; 0000 004A   char binaryNum[16];
-; 0000 004B   int binRes;
-; 0000 004C //!   char *binRes;
-; 0000 004D 
-; 0000 004E   PORTA = 0x00;
 ;PCODE: $00000051 VOL: 0
+; 0000 0021 
+; 0000 0022         PORTD = (i * 10) + j;
 ;PCODE: $00000052 VOL: 0
 ;PCODE: $00000053 VOL: 0
 ;PCODE: $00000054 VOL: 0
 ;PCODE: $00000055 VOL: 0
-;	i -> R16,R17
-;	j -> R18,R19
-;	temp1 -> R20,R21
-;	temp2 -> Y+34
-;	decimalNum -> Y+18
-;	binaryNum -> Y+2
-;	binRes -> Y+0
+; 0000 0023         delay_ms(10);
 ;PCODE: $00000056 VOL: 0
 ;PCODE: $00000057 VOL: 0
 ;PCODE: $00000058 VOL: 0
+; 0000 0024 
+; 0000 0025         for (tekrar = 0; tekrar < 25; tekrar++) {
 ;PCODE: $00000059 VOL: 0
 ;PCODE: $0000005A VOL: 0
 ;PCODE: $0000005B VOL: 0
 ;PCODE: $0000005C VOL: 0
 ;PCODE: $0000005D VOL: 0
-; 0000 004F   DDRA = 0xFF;
 ;PCODE: $0000005E VOL: 0
 ;PCODE: $0000005F VOL: 0
-; 0000 0050 
-; 0000 0051   PORTB = 0x00;
 ;PCODE: $00000060 VOL: 0
 ;PCODE: $00000061 VOL: 0
-; 0000 0052   DDRB = 0xFF;
+; 0000 0026           PORTC = 1;
 ;PCODE: $00000062 VOL: 0
 ;PCODE: $00000063 VOL: 0
-; 0000 0053 
-; 0000 0054   PORTD = 0x00;
+; 0000 0027           PORTA = cathode_seg[j];
 ;PCODE: $00000064 VOL: 0
 ;PCODE: $00000065 VOL: 0
-; 0000 0055   DDRD = 0xFF;
 ;PCODE: $00000066 VOL: 0
 ;PCODE: $00000067 VOL: 0
-; 0000 0056 
-; 0000 0057   lcd_init(16);
 ;PCODE: $00000068 VOL: 0
 ;PCODE: $00000069 VOL: 0
-; 0000 0058 
-; 0000 0059   while (1) {
+; 0000 0028           delay_ms(10);
 ;PCODE: $0000006A VOL: 0
-; 0000 005A     for (i = 0; i < 100; i++) {
 ;PCODE: $0000006B VOL: 0
 ;PCODE: $0000006C VOL: 0
+; 0000 0029 
+; 0000 002A           PORTC = 2;
 ;PCODE: $0000006D VOL: 0
 ;PCODE: $0000006E VOL: 0
+; 0000 002B           PORTA = cathode_seg[i];
 ;PCODE: $0000006F VOL: 0
 ;PCODE: $00000070 VOL: 0
 ;PCODE: $00000071 VOL: 0
 ;PCODE: $00000072 VOL: 0
 ;PCODE: $00000073 VOL: 0
-; 0000 005B       temp1 = i % 10;
 ;PCODE: $00000074 VOL: 0
+; 0000 002C           delay_ms(10);
 ;PCODE: $00000075 VOL: 0
 ;PCODE: $00000076 VOL: 0
 ;PCODE: $00000077 VOL: 0
-; 0000 005C       temp2 = i / 10;
+; 0000 002D         }
 ;PCODE: $00000078 VOL: 0
 ;PCODE: $00000079 VOL: 0
 ;PCODE: $0000007A VOL: 0
 ;PCODE: $0000007B VOL: 0
-; 0000 005D 
-; 0000 005E       for (j = 0; j < 50; j++) {
 ;PCODE: $0000007C VOL: 0
+; 0000 002E       }
 ;PCODE: $0000007D VOL: 0
 ;PCODE: $0000007E VOL: 0
 ;PCODE: $0000007F VOL: 0
 ;PCODE: $00000080 VOL: 0
 ;PCODE: $00000081 VOL: 0
+; 0000 002F     }
 ;PCODE: $00000082 VOL: 0
 ;PCODE: $00000083 VOL: 0
 ;PCODE: $00000084 VOL: 0
-; 0000 005F         PORTA = temp1 + 16;
 ;PCODE: $00000085 VOL: 0
 ;PCODE: $00000086 VOL: 0
+; 0000 0030   }
 ;PCODE: $00000087 VOL: 0
-; 0000 0060         delay_ms(5);
 ;PCODE: $00000088 VOL: 0
+; 0000 0031 }
 ;PCODE: $00000089 VOL: 0
 ;PCODE: $0000008A VOL: 0
-; 0000 0061         PORTA = temp2 + 32;
 ;PCODE: $0000008B VOL: 0
 ;PCODE: $0000008C VOL: 0
-;PCODE: $0000008D VOL: 0
-; 0000 0062         delay_ms(5);
-;PCODE: $0000008E VOL: 0
-;PCODE: $0000008F VOL: 0
-;PCODE: $00000090 VOL: 0
-; 0000 0063       }
-;PCODE: $00000091 VOL: 0
-;PCODE: $00000092 VOL: 0
-;PCODE: $00000093 VOL: 0
-;PCODE: $00000094 VOL: 0
-;PCODE: $00000095 VOL: 0
-; 0000 0064 
-; 0000 0065       // lcd_clear();
-; 0000 0066       lcd_gotoxy(4, 0);
-;PCODE: $00000096 VOL: 0
-;PCODE: $00000097 VOL: 0
-;PCODE: $00000098 VOL: 0
-;PCODE: $00000099 VOL: 0
-; 0000 0067 
-; 0000 0068       (i > 9) ? sprintf(decimalNum, "DEC : %d", i)
-; 0000 0069               : sprintf(decimalNum, "DEC : 0%d", i);
-;PCODE: $0000009A VOL: 0
-;PCODE: $0000009B VOL: 0
-;PCODE: $0000009C VOL: 0
-;PCODE: $0000009D VOL: 0
-;PCODE: $0000009E VOL: 0
-;PCODE: $0000009F VOL: 0
-;PCODE: $000000A0 VOL: 0
-;PCODE: $000000A1 VOL: 0
-;PCODE: $000000A2 VOL: 0
-;PCODE: $000000A3 VOL: 0
-;PCODE: $000000A4 VOL: 0
-;PCODE: $000000A5 VOL: 0
-;PCODE: $000000A6 VOL: 0
-;PCODE: $000000A7 VOL: 0
-;PCODE: $000000A8 VOL: 0
-;PCODE: $000000A9 VOL: 0
-;PCODE: $000000AA VOL: 0
-;PCODE: $000000AB VOL: 0
-;PCODE: $000000AC VOL: 0
-;PCODE: $000000AD VOL: 0
-;PCODE: $000000AE VOL: 0
-;PCODE: $000000AF VOL: 0
-;PCODE: $000000B0 VOL: 0
-;PCODE: $000000B1 VOL: 0
-;PCODE: $000000B2 VOL: 0
-;PCODE: $000000B3 VOL: 0
-;PCODE: $000000B4 VOL: 0
-;PCODE: $000000B5 VOL: 0
-;PCODE: $000000B6 VOL: 0
-;PCODE: $000000B7 VOL: 0
-;PCODE: $000000B8 VOL: 0
-; 0000 006A 
-; 0000 006B       lcd_puts(decimalNum);
-;PCODE: $000000B9 VOL: 0
-;PCODE: $000000BA VOL: 0
-; 0000 006C       // lcd_putsf("string");
-; 0000 006D 
-; 0000 006E       lcd_gotoxy(1, 1);
-;PCODE: $000000BB VOL: 0
-;PCODE: $000000BC VOL: 0
-;PCODE: $000000BD VOL: 0
-;PCODE: $000000BE VOL: 0
-; 0000 006F       binRes = decToBinary(i);
-;PCODE: $000000BF VOL: 0
-;PCODE: $000000C0 VOL: 0
-;PCODE: $000000C1 VOL: 0
-; 0000 0070 
-; 0000 0071       sprintf(binaryNum, "BIN : %d", binRes);
-;PCODE: $000000C2 VOL: 0
-;PCODE: $000000C3 VOL: 0
-;PCODE: $000000C4 VOL: 0
-;PCODE: $000000C5 VOL: 0
-;PCODE: $000000C6 VOL: 0
-;PCODE: $000000C7 VOL: 0
-;PCODE: $000000C8 VOL: 0
-;PCODE: $000000C9 VOL: 0
-;PCODE: $000000CA VOL: 0
-;PCODE: $000000CB VOL: 0
-;PCODE: $000000CC VOL: 0
-;PCODE: $000000CD VOL: 0
-; 0000 0072 
-; 0000 0073       //! sprintf(binaryNum, "BIN : %d%d%d%d%d%d%d%d", binRes[0], binRes[1],
-; 0000 0074       //         binRes[2], binRes[3], binRes[4], binRes[5], binRes[6], binRes[7]);
-; 0000 0075       lcd_puts(binaryNum);
-;PCODE: $000000CE VOL: 0
-;PCODE: $000000CF VOL: 0
-; 0000 0076 
-; 0000 0077       delay_ms(100);
-;PCODE: $000000D0 VOL: 0
-;PCODE: $000000D1 VOL: 0
-;PCODE: $000000D2 VOL: 0
-; 0000 0078 
-; 0000 0079       PORTD = i;
-;PCODE: $000000D3 VOL: 0
-;PCODE: $000000D4 VOL: 0
-; 0000 007A       delay_ms(100);
-;PCODE: $000000D5 VOL: 0
-;PCODE: $000000D6 VOL: 0
-;PCODE: $000000D7 VOL: 0
-; 0000 007B     };
-;PCODE: $000000D8 VOL: 0
-;PCODE: $000000D9 VOL: 0
-;PCODE: $000000DA VOL: 0
-;PCODE: $000000DB VOL: 0
-;PCODE: $000000DC VOL: 0
-; 0000 007C   }
-;PCODE: $000000DD VOL: 0
-;PCODE: $000000DE VOL: 0
-; 0000 007D }
-;PCODE: $000000DF VOL: 0
-;PCODE: $000000E0 VOL: 0
-;PCODE: $000000E1 VOL: 0
-;PCODE: $000000E2 VOL: 0

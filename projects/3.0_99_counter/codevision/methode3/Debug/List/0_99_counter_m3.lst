@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode3\Debug\List\0_99_counter_m3.asm Mon Dec 19 06:16:41 2022
+AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\codevision\methode3\Debug\List\0_99_counter_m3.asm Wed Dec 28 19:35:51 2022
 
                  
                  
@@ -1227,7 +1227,7 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
                  ; 0000 000D 
                  ; 0000 000E   while (1) {
                  _0x4:
-                 ; 0000 000F     for (i = 0; i <= 9; i++) {
+                 ; 0000 000F     for (i = 0; i < 10; i++) {
 00005d e010      	LDI  R17,LOW(0)
                  _0x8:
 00005e 301a      	CPI  R17,10
@@ -1237,10 +1237,10 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
                  _0xB:
 000061 300a      	CPI  R16,10
 000062 f488      	BRSH _0xC
-                 ; 0000 0011         for (tekrar = 0; tekrar < 25; tekrar++) {
+                 ; 0000 0011         for (tekrar = 0; tekrar < 10; tekrar++) {
 000063 e030      	LDI  R19,LOW(0)
                  _0xE:
-000064 3139      	CPI  R19,25
+000064 303a      	CPI  R19,10
 000065 f460      	BRSH _0xF
                  ; 0000 0012           PORTB = 1;
 000066 e0e1      	LDI  R30,LOW(1)
@@ -1248,31 +1248,30 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
                  ; 0000 0013           PORTA = cathode_seg[j];
 000068 2fe0      	MOV  R30,R16
 000069 940e 0078 	CALL SUBOPT_0x0
-                 ; 0000 0014           delay_ms(10);
+                 ; 0000 0014           delay_ms(5);
                  ; 0000 0015 
                  ; 0000 0016           PORTB = 2;
 00006b e0e2      	LDI  R30,LOW(2)
 00006c bbe8      	OUT  0x18,R30
-                 ; 0000 0017 
-                 ; 0000 0018           PORTA = cathode_seg[i];
+                 ; 0000 0017           PORTA = cathode_seg[i];
 00006d 2fe1      	MOV  R30,R17
 00006e 940e 0078 	CALL SUBOPT_0x0
-                 ; 0000 0019           delay_ms(10);
-                 ; 0000 001A         }
+                 ; 0000 0018           delay_ms(5);
+                 ; 0000 0019         }
 000070 5f3f      	SUBI R19,-1
 000071 cff2      	RJMP _0xE
                  _0xF:
-                 ; 0000 001B       };
+                 ; 0000 001A       };
 000072 5f0f      	SUBI R16,-1
 000073 cfed      	RJMP _0xB
                  _0xC:
-                 ; 0000 001C     }
+                 ; 0000 001B     }
 000074 5f1f      	SUBI R17,-1
 000075 cfe8      	RJMP _0x8
                  _0x9:
-                 ; 0000 001D   };
+                 ; 0000 001C   };
 000076 cfe6      	RJMP _0x4
-                 ; 0000 001E }
+                 ; 0000 001D }
                  _0x10:
 000077 cfff      	RJMP _0x10
                  ; .FEND
@@ -1294,7 +1293,7 @@ AVRASM ver. 2.1.30  D:\#Uni\#Terme 7\AVR_laboratory\projects\3.0_99_counter\code
 00007b 1fbf      	ADC  R27,R31
 00007c 91ec      	LD   R30,X
 00007d bbeb      	OUT  0x1B,R30
-00007e e0aa      	LDI  R26,LOW(10)
+00007e e0a5      	LDI  R26,LOW(5)
 00007f e0b0      	LDI  R27,0
 000080 940c 0082 	JMP  _delay_ms
                  

@@ -1251,9 +1251,9 @@ _0xB:
 	CALL SUBOPT_0x0
 	OUT  0x18,R30
 ; 0000 001B 
-; 0000 001C         delay_ms(300);
-	LDI  R26,LOW(300)
-	LDI  R27,HIGH(300)
+; 0000 001C         delay_ms(100);
+	LDI  R26,LOW(100)
+	LDI  R27,0
 	CALL _delay_ms
 ; 0000 001D       };
 	__ADDWRN 16,17,1

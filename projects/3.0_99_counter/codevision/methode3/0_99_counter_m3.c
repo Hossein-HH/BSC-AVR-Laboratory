@@ -12,17 +12,16 @@ void main() {
   DDRB = 0xFF;
 
   while (1) {
-    for (i = 0; i <= 9; i++) {
+    for (i = 0; i < 10; i++) {
       for (j = 0; j < 10; j++) {
-        for (tekrar = 0; tekrar < 25; tekrar++) {
+        for (tekrar = 0; tekrar < 10; tekrar++) {
           PORTB = 1;
-          PORTA = seg[j];
-          delay_ms(10);
+          PORTA = cathode_seg[j];
+          delay_ms(5);
 
           PORTB = 2;
-
           PORTA = cathode_seg[i];
-          delay_ms(10);
+          delay_ms(5);
         }
       };
     }

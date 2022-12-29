@@ -18,25 +18,16 @@ void main() {
   PORTB = 0x00;
 
   while (1) {
-    PORTB = 2;
-    PORTA = seg[0];
-    delay_ms(10);
-    PORTB = 1;
-    PORTA = seg[0];
-    delay_ms(100);
-
-    PORTB = 2;
-
     for (i = 0; i < 100; i++) {
       temp2 = i / 10;
       temp1 = i % 10;
 
       for (x = 0; x < 50; x++) {
-        PORTB = 1;
+        PORTB = 2;
         PORTA = seg[temp2];
         delay_ms(5);
 
-        PORTB = 2;
+        PORTB = 1;
         PORTA = seg[temp1];
         delay_ms(5);
       }

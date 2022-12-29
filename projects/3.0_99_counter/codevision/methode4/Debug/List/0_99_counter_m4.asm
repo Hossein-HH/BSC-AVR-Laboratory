@@ -1230,74 +1230,49 @@ _main:
 ; 0000 0013 
 ; 0000 0014   while (1) {
 _0x4:
-; 0000 0015     PORTB = 2;
-	LDI  R30,LOW(2)
-	OUT  0x18,R30
-; 0000 0016     PORTA = seg[0];
-	LDD  R30,Y+2
-	OUT  0x1B,R30
-; 0000 0017     delay_ms(10);
-	LDI  R26,LOW(10)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 0018     PORTB = 1;
-	LDI  R30,LOW(1)
-	OUT  0x18,R30
-; 0000 0019     PORTA = seg[0];
-	LDD  R30,Y+2
-	OUT  0x1B,R30
-; 0000 001A     delay_ms(100);
-	LDI  R26,LOW(100)
-	LDI  R27,0
-	CALL _delay_ms
-; 0000 001B 
-; 0000 001C     PORTB = 2;
-	LDI  R30,LOW(2)
-	OUT  0x18,R30
-; 0000 001D 
-; 0000 001E     for (i = 0; i < 100; i++) {
+; 0000 0015     for (i = 0; i < 100; i++) {
 	__GETWRN 16,17,0
 _0x8:
 	__CPWRN 16,17,100
 	BRGE _0x9
-; 0000 001F       temp2 = i / 10;
+; 0000 0016       temp2 = i / 10;
 	MOVW R26,R16
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	CALL __DIVW21
 	MOVW R20,R30
-; 0000 0020       temp1 = i % 10;
+; 0000 0017       temp1 = i % 10;
 	MOVW R26,R16
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	CALL __MODW21
 	MOVW R18,R30
-; 0000 0021 
-; 0000 0022       for (x = 0; x < 50; x++) {
+; 0000 0018 
+; 0000 0019       for (x = 0; x < 10; x++) {
 	LDI  R30,LOW(0)
 	STD  Y+0,R30
 	STD  Y+0+1,R30
 _0xB:
 	LD   R26,Y
 	LDD  R27,Y+1
-	SBIW R26,50
+	SBIW R26,10
 	BRGE _0xC
-; 0000 0023         PORTB = 1;
-	LDI  R30,LOW(1)
-	OUT  0x18,R30
-; 0000 0024         PORTA = seg[temp2];
-	MOVW R30,R20
-	CALL SUBOPT_0x0
-; 0000 0025         delay_ms(5);
-; 0000 0026 
-; 0000 0027         PORTB = 2;
+; 0000 001A         PORTB = 2;
 	LDI  R30,LOW(2)
 	OUT  0x18,R30
-; 0000 0028         PORTA = seg[temp1];
+; 0000 001B         PORTA = seg[temp2];
+	MOVW R30,R20
+	CALL SUBOPT_0x0
+; 0000 001C         delay_ms(5);
+; 0000 001D 
+; 0000 001E         PORTB = 1;
+	LDI  R30,LOW(1)
+	OUT  0x18,R30
+; 0000 001F         PORTA = seg[temp1];
 	MOVW R30,R18
 	CALL SUBOPT_0x0
-; 0000 0029         delay_ms(5);
-; 0000 002A       }
+; 0000 0020         delay_ms(5);
+; 0000 0021       }
 	LD   R30,Y
 	LDD  R31,Y+1
 	ADIW R30,1
@@ -1305,13 +1280,13 @@ _0xB:
 	STD  Y+1,R31
 	RJMP _0xB
 _0xC:
-; 0000 002B     };
+; 0000 0022     };
 	__ADDWRN 16,17,1
 	RJMP _0x8
 _0x9:
-; 0000 002C   }
+; 0000 0023   }
 	RJMP _0x4
-; 0000 002D }
+; 0000 0024 }
 _0xD:
 	RJMP _0xD
 ; .FEND

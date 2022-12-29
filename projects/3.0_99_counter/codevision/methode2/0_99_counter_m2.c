@@ -18,7 +18,7 @@ void main() {
     PORTA = seg[0];
     PORTB = seg[0];
 
-    for (i = 0; i <= 99; i++) {
+    for (i = 0; i < 100; i++) {
       PORTA = seg[i / 10];
       delay_ms(50);
 

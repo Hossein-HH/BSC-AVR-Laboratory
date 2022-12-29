@@ -1235,63 +1235,25 @@ __GLOBAL_INI_END:
 	#endif
 ;#include <stdio.h>
 ;
-;//  #asm
-;// .equ __lcd_port = 0x1b; // PORTA
-;//  .equ __lcd_port = 0x18; // PORTB
-;// .equ __lcd_port = 0x15; // PORTC
-;// .equ __lcd_port = 0x12; // PORTD
-;// #endasm
-;
 ;unsigned char seg[10] = {0x3f, 0x06, 0x5b, 0x4f, 0x66,
 ;                         0x6d, 0x7d, 0x07, 0x7f, 0x6f};
 
 	.DSEG
 ;
-;//! char *decToBinary(int n) {
-;//   int binaryNum[8];
-;//   int binaryResult = 0;
-;//   char *result;
-;
-;//   int i = 0;
-;//   int j = 0;
-;//   int digitCounter = 0;
-;
-;//   while (n > 0) {
-;//     binaryNum[i] = n % 2;
-;//     n = n / 2;
-;//     i++;
-;//   }
-;
-;//   for (j = i - 1; j >= 0; j--)
-;//     binaryResult = (binaryResult * 10) + binaryNum[j];
-;//   //   printf("%d", binaryNum[j]);
-;
-;//   while (binaryResult != 0) {
-;//     result[7 - digitCounter] = char(binaryResult % 10);
-;//     binaryResult /= 10;
-;//     digitCounter++;
-;//   }
-;
-;//   while (digitCounter < 8)
-;//     result[digitCounter++] = '0';
-;
-;//   return result;
-;//! }
-;
 ;int decToBinary(int n) {
-; 0000 002F int decToBinary(int n) {
+; 0000 0009 int decToBinary(int n) {
 
 	.CSEG
 _decToBinary:
 ; .FSTART _decToBinary
-; 0000 0030   int binaryNum[8];
-; 0000 0031   int binaryResult = 0;
-; 0000 0032 
-; 0000 0033   int x = 0;
-; 0000 0034   int j = 0;
-; 0000 0035   //   int digitCounter = 0;
-; 0000 0036 
-; 0000 0037   while (n > 0) {
+; 0000 000A   int binaryNum[8];
+; 0000 000B   int binaryResult = 0;
+; 0000 000C 
+; 0000 000D   int x = 0;
+; 0000 000E   int j = 0;
+; 0000 000F   //   int digitCounter = 0;
+; 0000 0010 
+; 0000 0011   while (n > 0) {
 	ST   -Y,R27
 	ST   -Y,R26
 	SBIW R28,16
@@ -1307,7 +1269,7 @@ _0x4:
 	LDD  R27,Y+22+1
 	CALL __CPW02
 	BRGE _0x6
-; 0000 0038     binaryNum[x] = n % 2;
+; 0000 0012     binaryNum[x] = n % 2;
 	MOVW R30,R18
 	MOVW R26,R28
 	ADIW R26,6
@@ -1324,7 +1286,7 @@ _0x4:
 	MOVW R26,R0
 	ST   X+,R30
 	ST   X,R31
-; 0000 0039     n = n / 2;
+; 0000 0013     n = n / 2;
 	LDD  R26,Y+22
 	LDD  R27,Y+22+1
 	LDI  R30,LOW(2)
@@ -1332,20 +1294,20 @@ _0x4:
 	CALL __DIVW21
 	STD  Y+22,R30
 	STD  Y+22+1,R31
-; 0000 003A     x++;
+; 0000 0014     x++;
 	__ADDWRN 18,19,1
-; 0000 003B   }
+; 0000 0015   }
 	RJMP _0x4
 _0x6:
-; 0000 003C 
-; 0000 003D   for (j = x - 1; j >= 0; j--)
+; 0000 0016 
+; 0000 0017   for (j = x - 1; j >= 0; j--)
 	MOVW R30,R18
 	SBIW R30,1
 	MOVW R20,R30
 _0x8:
 	TST  R21
 	BRMI _0x9
-; 0000 003E     binaryResult = (binaryResult * 10) + binaryNum[j];
+; 0000 0018     binaryResult = (binaryResult * 10) + binaryNum[j];
 	MOVW R30,R16
 	LDI  R26,LOW(10)
 	LDI  R27,HIGH(10)
@@ -1365,31 +1327,30 @@ _0x8:
 	__SUBWRN 20,21,1
 	RJMP _0x8
 _0x9:
-; 0000 0041 return binaryResult;
+; 0000 001B return binaryResult;
 	MOVW R30,R16
 	CALL __LOADLOCR6
 	ADIW R28,24
 	RET
-; 0000 0042 }
+; 0000 001C }
 ; .FEND
 ;
 ;void main(void) {
-; 0000 0044 void main(void) {
+; 0000 001E void main(void) {
 _main:
 ; .FSTART _main
-; 0000 0045 
-; 0000 0046   int i = 0;
-; 0000 0047   int j = 0;
-; 0000 0048 
-; 0000 0049   int temp1 = 0;
-; 0000 004A   int temp2 = 0;
-; 0000 004B 
-; 0000 004C   char decimalNum[16];
-; 0000 004D   char binaryNum[16];
-; 0000 004E   int binRes;
-; 0000 004F   //!   char *binRes;
-; 0000 0050 
-; 0000 0051   PORTA = 0x00;
+; 0000 001F 
+; 0000 0020   int i = 0;
+; 0000 0021   int j = 0;
+; 0000 0022 
+; 0000 0023   int temp1 = 0;
+; 0000 0024   int temp2 = 0;
+; 0000 0025 
+; 0000 0026   char decimalNum[16];
+; 0000 0027   char binaryNum[16];
+; 0000 0028   int binRes;
+; 0000 0029 
+; 0000 002A   PORTA = 0x00;
 	SBIW R28,36
 	LDI  R30,LOW(0)
 	STD  Y+34,R30
@@ -1404,147 +1365,132 @@ _main:
 	CALL SUBOPT_0x0
 	LDI  R30,LOW(0)
 	OUT  0x1B,R30
-; 0000 0052   DDRA = 0xFF;
+; 0000 002B   DDRA = 0xFF;
 	LDI  R30,LOW(255)
 	OUT  0x1A,R30
-; 0000 0053 
-; 0000 0054   PORTB = 0x00;
+; 0000 002C 
+; 0000 002D   PORTB = 0x00;
 	LDI  R30,LOW(0)
 	OUT  0x18,R30
-; 0000 0055   DDRB = 0xFF;
+; 0000 002E   DDRB = 0xFF;
 	LDI  R30,LOW(255)
 	OUT  0x17,R30
-; 0000 0056 
-; 0000 0057   PORTC = 0x00;
+; 0000 002F 
+; 0000 0030   PORTC = 0x00;
 	LDI  R30,LOW(0)
 	OUT  0x15,R30
-; 0000 0058   DDRC = 0x00;
+; 0000 0031   DDRC = 0xF0;
+	LDI  R30,LOW(240)
 	OUT  0x14,R30
-; 0000 0059 
-; 0000 005A   PORTD = 0x00;
+; 0000 0032 
+; 0000 0033   PORTD = 0x00;
+	LDI  R30,LOW(0)
 	OUT  0x12,R30
-; 0000 005B   DDRD = 0xFF;
+; 0000 0034   DDRD = 0xFF;
 	LDI  R30,LOW(255)
 	OUT  0x11,R30
-; 0000 005C 
-; 0000 005D   lcd_init(16);
+; 0000 0035 
+; 0000 0036   lcd_init(16);
 	LDI  R26,LOW(16)
 	RCALL _lcd_init
-; 0000 005E 
-; 0000 005F   while (1) {
+; 0000 0037 
+; 0000 0038   while (1) {
 _0xA:
-; 0000 0060 
-; 0000 0061     for (j = 0; j < 50; j++) {
-	__GETWRN 18,19,0
-_0xE:
-	__CPWRN 18,19,50
-	BRLT PC+2
-	RJMP _0xF
-; 0000 0062       if (PINC .7 == 1) {
-	SBIS 0x13,7
-	RJMP _0x10
-; 0000 0063         PORTA = 2;
+; 0000 0039     PINC .4 = 0;
 	CALL SUBOPT_0x1
-; 0000 0064         PORTD = 0xFF - seg[temp1];
-; 0000 0065         delay_ms(5);
-; 0000 0066 
-; 0000 0067         PORTA = 1;
-; 0000 0068         PORTD = 0xFF - seg[temp2];
-; 0000 0069         delay_ms(5);
-; 0000 006A       } else {
-	RJMP _0x11
-_0x10:
-; 0000 006B         PORTA = 0;
-	LDI  R30,LOW(0)
-	OUT  0x1B,R30
-; 0000 006C       }
-_0x11:
-; 0000 006D 
-; 0000 006E       if (PINC .0 == 0 || PINC .1 == 0) {
+; 0000 003A     PINC .4 = 1;
+; 0000 003B     PORTA = seg[temp1];
+; 0000 003C     delay_ms(5);
+; 0000 003D 
+; 0000 003E     PINC .5 = 0;
+; 0000 003F     PINC .5 = 1;
+; 0000 0040     PORTA = seg[temp2];
+; 0000 0041     delay_ms(5);
+; 0000 0042 
+; 0000 0043     if (PINC .0 == 0 || PINC .1 == 0) {
 	SBIS 0x13,0
-	RJMP _0x13
-	SBIC 0x13,1
-	RJMP _0x12
-_0x13:
-; 0000 006F 
-; 0000 0070         if (PINC .0 == 0 && i != 99)
-	SBIC 0x13,0
 	RJMP _0x16
+	SBIC 0x13,1
+	RJMP _0x15
+_0x16:
+; 0000 0044 
+; 0000 0045       if (PINC .0 == 0 && i != 99)
+	SBIC 0x13,0
+	RJMP _0x19
 	LDI  R30,LOW(99)
 	LDI  R31,HIGH(99)
 	CP   R30,R16
 	CPC  R31,R17
-	BRNE _0x17
-_0x16:
-	RJMP _0x15
-_0x17:
-; 0000 0071           i++;
-	__ADDWRN 16,17,1
-; 0000 0072         else if (PINC .1 == 0 && i != 0)
+	BRNE _0x1A
+_0x19:
 	RJMP _0x18
-_0x15:
+_0x1A:
+; 0000 0046         i++;
+	__ADDWRN 16,17,1
+; 0000 0047       else if (PINC .1 == 0 && i != 0)
+	RJMP _0x1B
+_0x18:
 	SBIC 0x13,1
-	RJMP _0x1A
+	RJMP _0x1D
 	CLR  R0
 	CP   R0,R16
 	CPC  R0,R17
-	BRNE _0x1B
-_0x1A:
-	RJMP _0x19
-_0x1B:
-; 0000 0073           i--;
+	BRNE _0x1E
+_0x1D:
+	RJMP _0x1C
+_0x1E:
+; 0000 0048         i--;
 	__SUBWRN 16,17,1
-; 0000 0074 
-; 0000 0075         lcd_clear();
-_0x19:
-_0x18:
+; 0000 0049 
+; 0000 004A       lcd_clear();
+_0x1C:
+_0x1B:
 	RCALL _lcd_clear
-; 0000 0076         lcd_gotoxy(4, 0);
+; 0000 004B       lcd_gotoxy(4, 0);
 	LDI  R30,LOW(4)
 	ST   -Y,R30
 	LDI  R26,LOW(0)
 	RCALL _lcd_gotoxy
-; 0000 0077 
-; 0000 0078         (i > 9) ? sprintf(decimalNum, "DEC : %d", i)
-; 0000 0079                 : sprintf(decimalNum, "DEC : 0%d", i);
+; 0000 004C 
+; 0000 004D       (i > 9) ? sprintf(decimalNum, "DEC : %d", i)
+; 0000 004E               : sprintf(decimalNum, "DEC : 0%d", i);
 	__CPWRN 16,17,10
-	BRLT _0x1C
+	BRLT _0x1F
 	MOVW R30,R28
 	ADIW R30,18
 	ST   -Y,R31
 	ST   -Y,R30
 	__POINTW1FN _0x0,0
-	RJMP _0x24
-_0x1C:
+	RJMP _0x2E
+_0x1F:
 	MOVW R30,R28
 	ADIW R30,18
 	ST   -Y,R31
 	ST   -Y,R30
 	__POINTW1FN _0x0,9
-_0x24:
+_0x2E:
 	ST   -Y,R31
 	ST   -Y,R30
 	MOVW R30,R16
 	CALL SUBOPT_0x2
-; 0000 007A 
-; 0000 007B         lcd_puts(decimalNum);
+; 0000 004F 
+; 0000 0050       lcd_puts(decimalNum);
 	MOVW R26,R28
 	ADIW R26,18
 	RCALL _lcd_puts
-; 0000 007C         // lcd_putsf("string");
-; 0000 007D 
-; 0000 007E         lcd_gotoxy(1, 1);
+; 0000 0051 
+; 0000 0052       lcd_gotoxy(1, 1);
 	LDI  R30,LOW(1)
 	ST   -Y,R30
 	LDI  R26,LOW(1)
 	RCALL _lcd_gotoxy
-; 0000 007F         binRes = decToBinary(i);
+; 0000 0053       binRes = decToBinary(i);
 	MOVW R26,R16
 	RCALL _decToBinary
 	ST   Y,R30
 	STD  Y+1,R31
-; 0000 0080 
-; 0000 0081         sprintf(binaryNum, "BIN : %d", binRes);
+; 0000 0054 
+; 0000 0055       sprintf(binaryNum, "BIN : %d", binRes);
 	MOVW R30,R28
 	ADIW R30,2
 	ST   -Y,R31
@@ -1555,75 +1501,63 @@ _0x24:
 	LDD  R30,Y+4
 	LDD  R31,Y+4+1
 	CALL SUBOPT_0x2
-; 0000 0082 
-; 0000 0083         //! sprintf(binaryNum, "BIN : %d%d%d%d%d%d%d%d", binRes[0], binRes[1],
-; 0000 0084         //         binRes[2], binRes[3], binRes[4], binRes[5], binRes[6],
-; 0000 0085         //         binRes[7]);
-; 0000 0086         lcd_puts(binaryNum);
+; 0000 0056 
+; 0000 0057       lcd_puts(binaryNum);
 	MOVW R26,R28
 	ADIW R26,2
 	RCALL _lcd_puts
-; 0000 0087         delay_ms(50);
+; 0000 0058       delay_ms(50);
 	LDI  R26,LOW(50)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 0088 
-; 0000 0089         temp1 = i % 10;
+; 0000 0059 
+; 0000 005A       temp1 = i % 10;
 	MOVW R26,R16
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	CALL __MODW21
 	MOVW R20,R30
-; 0000 008A         temp2 = i / 10;
+; 0000 005B       temp2 = i / 10;
 	MOVW R26,R16
 	LDI  R30,LOW(10)
 	LDI  R31,HIGH(10)
 	CALL __DIVW21
 	STD  Y+34,R30
 	STD  Y+34+1,R31
-; 0000 008B 
-; 0000 008C         for (j = 0; j < 50; j++) {
+; 0000 005C 
+; 0000 005D       for (j = 0; j < 50; j++) {
 	__GETWRN 18,19,0
-_0x20:
+_0x23:
 	__CPWRN 18,19,50
-	BRGE _0x21
-; 0000 008D           PORTA = 2;
+	BRGE _0x24
+; 0000 005E         PINC .4 = 0;
 	CALL SUBOPT_0x1
-; 0000 008E           PORTD = 0xFF - seg[temp1];
-; 0000 008F           delay_ms(5);
-; 0000 0090 
-; 0000 0091           PORTA = 1;
-; 0000 0092           PORTD = 0xFF - seg[temp2];
-; 0000 0093           delay_ms(5);
-; 0000 0094         }
+; 0000 005F         PINC .4 = 1;
+; 0000 0060         PORTA = seg[temp1];
+; 0000 0061         delay_ms(5);
+; 0000 0062 
+; 0000 0063         PINC .5 = 0;
+; 0000 0064         PINC .5 = 1;
+; 0000 0065         PORTA = seg[temp2];
+; 0000 0066         delay_ms(5);
+; 0000 0067       }
 	__ADDWRN 18,19,1
-	RJMP _0x20
-_0x21:
-; 0000 0095         if (PINC .7 == 0) {
-	SBIC 0x13,7
-	RJMP _0x22
-; 0000 0096           PORTA = 0;
-	LDI  R30,LOW(0)
-	OUT  0x1B,R30
-; 0000 0097           PORTD = i;
+	RJMP _0x23
+_0x24:
+; 0000 0068 
+; 0000 0069       PORTD = i;
 	OUT  0x12,R16
-; 0000 0098           delay_ms(100);
-	LDI  R26,LOW(100)
+; 0000 006A       delay_ms(5);
+	LDI  R26,LOW(5)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 0099         }
-; 0000 009A       };
-_0x22:
-_0x12:
-; 0000 009B     }
-	__ADDWRN 18,19,1
-	RJMP _0xE
-_0xF:
-; 0000 009C   }
+; 0000 006B     };
+_0x15:
+; 0000 006C   }
 	RJMP _0xA
-; 0000 009D }
-_0x23:
-	RJMP _0x23
+; 0000 006D }
+_0x2D:
+	RJMP _0x2D
 ; .FEND
 	#ifndef __SLEEP_DEFINED__
 	#define __SLEEP_DEFINED__
@@ -2329,31 +2263,27 @@ SUBOPT_0x0:
 	__GETWRN 20,21,0
 	RET
 
-;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:23 WORDS
+;OPTIMIZER ADDED SUBROUTINE, CALLED 2 TIMES, CODE SIZE REDUCTION:19 WORDS
 SUBOPT_0x1:
-	LDI  R30,LOW(2)
-	OUT  0x1B,R30
+	CBI  0x13,4
+	SBI  0x13,4
 	LDI  R26,LOW(_seg)
 	LDI  R27,HIGH(_seg)
 	ADD  R26,R20
 	ADC  R27,R21
-	LD   R26,X
-	LDI  R30,LOW(255)
-	SUB  R30,R26
-	OUT  0x12,R30
+	LD   R30,X
+	OUT  0x1B,R30
 	LDI  R26,LOW(5)
 	LDI  R27,0
 	CALL _delay_ms
-	LDI  R30,LOW(1)
-	OUT  0x1B,R30
+	CBI  0x13,5
+	SBI  0x13,5
 	LDD  R30,Y+34
 	LDD  R31,Y+34+1
 	SUBI R30,LOW(-_seg)
 	SBCI R31,HIGH(-_seg)
-	LD   R26,Z
-	LDI  R30,LOW(255)
-	SUB  R30,R26
-	OUT  0x12,R30
+	LD   R30,Z
+	OUT  0x1B,R30
 	LDI  R26,LOW(5)
 	LDI  R27,0
 	JMP  _delay_ms

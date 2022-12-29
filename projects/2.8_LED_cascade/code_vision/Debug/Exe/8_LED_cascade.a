@@ -1,3 +1,5 @@
+;#include <delay.h>
+;#include <math.h>
 ;#include <mega32a.h>
 ;PCODE: $00000000 VOL: 0
 	#ifndef __SLEEP_DEFINED__
@@ -24,24 +26,23 @@
 ;PCODE: $0000000B VOL: 0
 ;PCODE: $0000000C VOL: 0
 ;#include <stdio.h>
-;#include <delay.h>
-;#include <math.h>
+;
 ;
 ;int i;
 ;
 ;void main(void) {
-; 0000 0008 void main(void) {
+; 0000 0009 void main(void) {
 
 	.CSEG
 ;PCODE: $0000000D VOL: 0
-; 0000 0009 
-; 0000 000A   DDRA = 0xFF;
+; 0000 000A 
+; 0000 000B   DDRA = 0xFF;
 ;PCODE: $0000000E VOL: 0
 ;PCODE: $0000000F VOL: 0
-; 0000 000B 
-; 0000 000C   while (1) {
+; 0000 000C 
+; 0000 000D   while (1) {
 ;PCODE: $00000010 VOL: 0
-; 0000 000D       for (i = 1; i < 9; i++)
+; 0000 000E     for (i = 1; i < 9; i++) {
 ;PCODE: $00000011 VOL: 0
 ;PCODE: $00000012 VOL: 0
 ;PCODE: $00000013 VOL: 0
@@ -52,8 +53,7 @@
 ;PCODE: $00000018 VOL: 0
 ;PCODE: $00000019 VOL: 0
 ;PCODE: $0000001A VOL: 0
-; 0000 000E       {
-; 0000 000F             PORTA = pow(2,i) - 1;
+; 0000 000F       PORTA = pow(2, i) - 1;
 ;PCODE: $0000001B VOL: 0
 ;PCODE: $0000001C VOL: 0
 ;PCODE: $0000001D VOL: 0
@@ -66,29 +66,28 @@
 ;PCODE: $00000024 VOL: 0
 ;PCODE: $00000025 VOL: 0
 ;PCODE: $00000026 VOL: 0
-; 0000 0010             delay_ms(200);
+; 0000 0010       delay_ms(200);
 ;PCODE: $00000027 VOL: 0
 ;PCODE: $00000028 VOL: 0
 ;PCODE: $00000029 VOL: 0
-; 0000 0011             PORTA = 0;
+; 0000 0011       PORTA = 0;
 ;PCODE: $0000002A VOL: 0
 ;PCODE: $0000002B VOL: 0
-; 0000 0012             delay_ms(200);
+; 0000 0012       delay_ms(200);
 ;PCODE: $0000002C VOL: 0
 ;PCODE: $0000002D VOL: 0
 ;PCODE: $0000002E VOL: 0
-; 0000 0013       }
+; 0000 0013     }
 ;PCODE: $0000002F VOL: 0
 ;PCODE: $00000030 VOL: 0
 ;PCODE: $00000031 VOL: 0
 ;PCODE: $00000032 VOL: 0
 ;PCODE: $00000033 VOL: 0
 ;PCODE: $00000034 VOL: 0
-; 0000 0014 
-; 0000 0015   }
+; 0000 0014   }
 ;PCODE: $00000035 VOL: 0
 ;PCODE: $00000036 VOL: 0
-; 0000 0016 }
+; 0000 0015 }
 ;PCODE: $00000037 VOL: 0
 ;PCODE: $00000038 VOL: 0
 ;PCODE: $00000039 VOL: 0

@@ -1116,22 +1116,22 @@ __START_OF_CODE:
 	JMP  0x00
 	JMP  0x00
 
-_tbl10_G100:
+_tbl10_G101:
 	.DB  0x10,0x27,0xE8,0x3,0x64,0x0,0xA,0x0
 	.DB  0x1,0x0
-_tbl16_G100:
+_tbl16_G101:
 	.DB  0x0,0x10,0x0,0x1,0x10,0x0,0x1,0x0
 
-_0x2080060:
+_0x2040060:
 	.DB  0x1
-_0x2080000:
+_0x2040000:
 	.DB  0x2D,0x4E,0x41,0x4E,0x0,0x49,0x4E,0x46
 	.DB  0x0
 
 __GLOBAL_INI_TBL:
 	.DW  0x01
-	.DW  __seed_G104
-	.DW  _0x2080060*2
+	.DW  __seed_G102
+	.DW  _0x2040060*2
 
 _0xFFFFFFFF:
 	.DW  0
@@ -1209,6 +1209,8 @@ __GLOBAL_INI_END:
 	.ORG 0x260
 
 	.CSEG
+;#include <delay.h>
+;#include <math.h>
 ;#include <mega32a.h>
 	#ifndef __SLEEP_DEFINED__
 	#define __SLEEP_DEFINED__
@@ -1222,25 +1224,24 @@ __GLOBAL_INI_END:
 	.SET power_ctrl_reg=mcucr
 	#endif
 ;#include <stdio.h>
-;#include <delay.h>
-;#include <math.h>
+;
 ;
 ;int i;
 ;
 ;void main(void) {
-; 0000 0008 void main(void) {
+; 0000 0009 void main(void) {
 
 	.CSEG
 _main:
 ; .FSTART _main
-; 0000 0009 
-; 0000 000A   DDRA = 0xFF;
+; 0000 000A 
+; 0000 000B   DDRA = 0xFF;
 	LDI  R30,LOW(255)
 	OUT  0x1A,R30
-; 0000 000B 
-; 0000 000C   while (1) {
+; 0000 000C 
+; 0000 000D   while (1) {
 _0x3:
-; 0000 000D       for (i = 1; i < 9; i++)
+; 0000 000E     for (i = 1; i < 9; i++) {
 	LDI  R30,LOW(1)
 	LDI  R31,HIGH(1)
 	MOVW R4,R30
@@ -1250,8 +1251,7 @@ _0x7:
 	CP   R4,R30
 	CPC  R5,R31
 	BRGE _0x8
-; 0000 000E       {
-; 0000 000F             PORTA = pow(2,i) - 1;
+; 0000 000F       PORTA = pow(2, i) - 1;
 	__GETD1N 0x40000000
 	CALL __PUTPARD1
 	MOVW R30,R4
@@ -1265,43 +1265,29 @@ _0x7:
 	CALL SUBOPT_0x2
 	CALL __CFD1U
 	OUT  0x1B,R30
-; 0000 0010             delay_ms(200);
+; 0000 0010       delay_ms(200);
 	LDI  R26,LOW(200)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 0011             PORTA = 0;
+; 0000 0011       PORTA = 0;
 	LDI  R30,LOW(0)
 	OUT  0x1B,R30
-; 0000 0012             delay_ms(200);
+; 0000 0012       delay_ms(200);
 	LDI  R26,LOW(200)
 	LDI  R27,0
 	CALL _delay_ms
-; 0000 0013       }
+; 0000 0013     }
 	MOVW R30,R4
 	ADIW R30,1
 	MOVW R4,R30
 	RJMP _0x7
 _0x8:
-; 0000 0014 
-; 0000 0015   }
+; 0000 0014   }
 	RJMP _0x3
-; 0000 0016 }
+; 0000 0015 }
 _0x9:
 	RJMP _0x9
 ; .FEND
-	#ifndef __SLEEP_DEFINED__
-	#define __SLEEP_DEFINED__
-	.EQU __se_bit=0x80
-	.EQU __sm_mask=0x70
-	.EQU __sm_powerdown=0x20
-	.EQU __sm_powersave=0x30
-	.EQU __sm_standby=0x60
-	.EQU __sm_ext_standby=0x70
-	.EQU __sm_adc_noise_red=0x10
-	.SET power_ctrl_reg=mcucr
-	#endif
-
-	.CSEG
 
 	.CSEG
 _ftrunc:
@@ -1385,10 +1371,10 @@ _log:
 	ST   -Y,R16
 	CALL SUBOPT_0x5
 	CALL __CPD02
-	BRLT _0x202000C
+	BRLT _0x200000C
 	__GETD1N 0xFF7FFFFF
 	RJMP _0x20A0003
-_0x202000C:
+_0x200000C:
 	CALL SUBOPT_0x6
 	CALL __PUTPARD1
 	IN   R26,SPL
@@ -1403,12 +1389,12 @@ _0x202000C:
 	CALL SUBOPT_0x5
 	__GETD1N 0x3F3504F3
 	CALL __CMPF12
-	BRSH _0x202000D
+	BRSH _0x200000D
 	CALL SUBOPT_0x8
 	CALL __ADDF12
 	CALL SUBOPT_0x7
 	__SUBWRN 16,17,1
-_0x202000D:
+_0x200000D:
 	CALL SUBOPT_0x6
 	CALL SUBOPT_0x4
 	PUSH R23
@@ -1472,25 +1458,25 @@ _exp:
 	CALL SUBOPT_0xC
 	__GETD1N 0xC2AEAC50
 	CALL __CMPF12
-	BRSH _0x202000F
+	BRSH _0x200000F
 	CALL SUBOPT_0xD
 	RJMP _0x20A0002
-_0x202000F:
+_0x200000F:
 	__GETD1S 10
 	CALL __CPD10
-	BRNE _0x2020010
+	BRNE _0x2000010
 	CALL SUBOPT_0x1
 	RJMP _0x20A0002
-_0x2020010:
+_0x2000010:
 	CALL SUBOPT_0xC
 	__GETD1N 0x42B17218
 	CALL __CMPF12
 	BREQ PC+2
 	BRCC PC+2
-	RJMP _0x2020011
+	RJMP _0x2000011
 	__GETD1N 0x7F7FFFFF
 	RJMP _0x20A0002
-_0x2020011:
+_0x2000011:
 	CALL SUBOPT_0xC
 	__GETD1N 0x3FB8AA3B
 	CALL __MULF12
@@ -1552,24 +1538,24 @@ _pow:
 	SBIW R28,4
 	CALL SUBOPT_0xE
 	CALL __CPD10
-	BRNE _0x2020012
+	BRNE _0x2000012
 	CALL SUBOPT_0xD
 	RJMP _0x20A0001
-_0x2020012:
+_0x2000012:
 	__GETD2S 8
 	CALL __CPD02
-	BRGE _0x2020013
+	BRGE _0x2000013
 	CALL SUBOPT_0xF
 	CALL __CPD10
-	BRNE _0x2020014
+	BRNE _0x2000014
 	CALL SUBOPT_0x1
 	RJMP _0x20A0001
-_0x2020014:
+_0x2000014:
 	__GETD2S 8
 	CALL SUBOPT_0x10
 	RCALL _exp
 	RJMP _0x20A0001
-_0x2020013:
+_0x2000013:
 	CALL SUBOPT_0xF
 	MOVW R26,R28
 	CALL __CFD1
@@ -1580,10 +1566,10 @@ _0x2020013:
 	MOVW R24,R22
 	CALL SUBOPT_0xF
 	CALL __CPD12
-	BREQ _0x2020015
+	BREQ _0x2000015
 	CALL SUBOPT_0xD
 	RJMP _0x20A0001
-_0x2020015:
+_0x2000015:
 	CALL SUBOPT_0xE
 	CALL __ANEGF1
 	MOVW R26,R30
@@ -1593,18 +1579,27 @@ _0x2020015:
 	__PUTD1S 8
 	LD   R30,Y
 	ANDI R30,LOW(0x1)
-	BRNE _0x2020016
+	BRNE _0x2000016
 	CALL SUBOPT_0xE
 	RJMP _0x20A0001
-_0x2020016:
+_0x2000016:
 	CALL SUBOPT_0xE
 	CALL __ANEGF1
 _0x20A0001:
 	ADIW R28,12
 	RET
 ; .FEND
-
-	.CSEG
+	#ifndef __SLEEP_DEFINED__
+	#define __SLEEP_DEFINED__
+	.EQU __se_bit=0x80
+	.EQU __sm_mask=0x70
+	.EQU __sm_powerdown=0x20
+	.EQU __sm_powersave=0x30
+	.EQU __sm_standby=0x60
+	.EQU __sm_ext_standby=0x70
+	.EQU __sm_adc_noise_red=0x10
+	.SET power_ctrl_reg=mcucr
+	#endif
 
 	.CSEG
 
@@ -1614,8 +1609,12 @@ _0x20A0001:
 
 	.CSEG
 
+	.CSEG
+
+	.CSEG
+
 	.DSEG
-__seed_G104:
+__seed_G102:
 	.BYTE 0x4
 
 	.CSEG

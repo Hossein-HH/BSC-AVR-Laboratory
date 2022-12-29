@@ -1214,7 +1214,7 @@ _main:
 ; 0000 000D 
 ; 0000 000E   while (1) {
 _0x4:
-; 0000 000F     for (i = 0; i <= 9; i++) {
+; 0000 000F     for (i = 0; i < 10; i++) {
 	LDI  R17,LOW(0)
 _0x8:
 	CPI  R17,10
@@ -1224,10 +1224,10 @@ _0x8:
 _0xB:
 	CPI  R16,10
 	BRSH _0xC
-; 0000 0011         for (tekrar = 0; tekrar < 25; tekrar++) {
+; 0000 0011         for (tekrar = 0; tekrar < 10; tekrar++) {
 	LDI  R19,LOW(0)
 _0xE:
-	CPI  R19,25
+	CPI  R19,10
 	BRSH _0xF
 ; 0000 0012           PORTB = 1;
 	LDI  R30,LOW(1)
@@ -1235,31 +1235,30 @@ _0xE:
 ; 0000 0013           PORTA = cathode_seg[j];
 	MOV  R30,R16
 	CALL SUBOPT_0x0
-; 0000 0014           delay_ms(10);
+; 0000 0014           delay_ms(5);
 ; 0000 0015 
 ; 0000 0016           PORTB = 2;
 	LDI  R30,LOW(2)
 	OUT  0x18,R30
-; 0000 0017 
-; 0000 0018           PORTA = cathode_seg[i];
+; 0000 0017           PORTA = cathode_seg[i];
 	MOV  R30,R17
 	CALL SUBOPT_0x0
-; 0000 0019           delay_ms(10);
-; 0000 001A         }
+; 0000 0018           delay_ms(5);
+; 0000 0019         }
 	SUBI R19,-1
 	RJMP _0xE
 _0xF:
-; 0000 001B       };
+; 0000 001A       };
 	SUBI R16,-1
 	RJMP _0xB
 _0xC:
-; 0000 001C     }
+; 0000 001B     }
 	SUBI R17,-1
 	RJMP _0x8
 _0x9:
-; 0000 001D   };
+; 0000 001C   };
 	RJMP _0x4
-; 0000 001E }
+; 0000 001D }
 _0x10:
 	RJMP _0x10
 ; .FEND
@@ -1290,7 +1289,7 @@ SUBOPT_0x0:
 	ADC  R27,R31
 	LD   R30,X
 	OUT  0x1B,R30
-	LDI  R26,LOW(10)
+	LDI  R26,LOW(5)
 	LDI  R27,0
 	JMP  _delay_ms
 
