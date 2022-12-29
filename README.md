@@ -20,7 +20,7 @@ Implementation AVR course codes with Dr.MosallaNezhad in Jahrom University
 ![](https://github.com/HuseynHuseyni/AVR_laboratory/blob/master/projects/3.0_99_counter/0_99_counter.gif)
 
 ### 4.lcd
-- Doing the previous project with LCD
+- Doing the previous project with displaying the number on LCD and 8 LEDs (base 2)
 
 ![](https://github.com/HuseynHuseyni/AVR_laboratory/blob/master/projects/4.lcd/lcd.gif)
 
