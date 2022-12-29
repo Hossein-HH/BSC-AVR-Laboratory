@@ -2,7 +2,7 @@
 
 Implementation AVR course codes with Dr.MosallaNezhad in Jahrom University
 
-## Implemented projects :
+## Implemented projects
 
 ### 1.8_LED 
 - Turn on 8 LEDs from both sides to the middle
