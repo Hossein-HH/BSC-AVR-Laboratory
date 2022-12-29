@@ -1,6 +1,6 @@
 # AVR_laboratory
 
-Implementation AVR course codes for ****ATMEGA32**** with Dr.MosallaNezhad in Jahrom University
+Implementation AVR course codes for ** *ATMEGA32* ** with Dr.MosallaNezhad in Jahrom University
 
 ## Implemented projects
 
