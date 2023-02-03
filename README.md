@@ -25,7 +25,7 @@ Implementation AVR course codes for ```ATMEGA32``` with Dr.MosallaNezhad in Jahr
 ![](https://github.com/HuseynHuseyni/AVR_laboratory/blob/master/projects/4.lcd/lcd.gif)
 
 ### 5.push_button
-- Scrolling the numbers from 0 to 99 with the help of a push button and displaying it on LCD (base 2 and base 10), seven segment (base 10) and LED (base 2)
+- Increasing the number from 0 to 99 with the help of a push button and displaying it on LCD (base 2 and base 10), seven segment (base 10) and LED (base 2)
 
 ![](https://github.com/HuseynHuseyni/AVR_laboratory/blob/master/projects/5.push_button/push_button.gif)
 
