@@ -1,4 +1,4 @@
-# JUC-AVR-Laboratory
+# BSC-AVR-Laboratory
 
 Welcome to the **JUC-AVR-Laboratory** repository! This repository contains AVR course code implementations using the `ATMEGA32` microcontroller under the guidance of Dr. MosallaNezhad at Jahrom University.
 
